@@ -3,6 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { verifyPassword } from "./lib/utils";
+import prisma from "./db/prisma";
 
 export const config = {
   pages: {
@@ -25,36 +26,29 @@ export const config = {
     }),
     CredentialsProvider({
       credentials: {
-        email: { type: "email" },
+        username: { type: "text" },
         password: { type: "password" },
       },
       async authorize(credentials) {
-        if (credentials.email === null || credentials.password === null)
+        if (credentials.username === null || credentials.password === null)
           return null;
 
-        const credentials_email = credentials.email as string;
+        const credentials_username = credentials.username as string;
         const credentials_password = credentials.password as string;
 
-        /**
-         * query your database with your credentials here using credentials_email...
-         * credentials should be saved in the database with hashed password.
-         * do not forget to hash your password using hashedPassword() before saving credentials in the db.
-         **/
+        const user = await prisma.user.findUnique({
+          where: {
+            username: credentials_username,
+          },
+        });
 
-        //This is a sample user object that represents the returned user from your database query
-        const user = {
-          email: "admin@gmail.com",
-          password:
-            "b151a43cce273df0aa8f651d6f6eeca9:97f7bce545f02c54056f49c6fda1d1afaa77f7b8c03607527a04f5ef0bc81e32b5b30e78b483311e58b4eaae904eaf28522b401e336834617937c00336ebce0a",
-          //this hashed password equates to: qwerty
-        };
+        if (!user) return null;
 
         const isVerified = await verifyPassword(
           credentials_password,
-          user.password
+          user.hashedPassword!
         );
 
-        //vertify database password with credentials_password
         if (!isVerified) return null;
 
         return user;

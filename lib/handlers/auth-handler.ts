@@ -12,3 +12,29 @@ export const signInByOAuth = async (provider: string) => {
     }
   }
 };
+
+export const signInByUsername = async (
+  prevState: unknown,
+  formData: FormData
+) => {
+  try {
+    if (!formData.get("username") || !formData.get("password")) {
+      return {
+        success: false,
+        message: "Invalid username or password",
+      };
+    }
+
+    const user = {
+      username: formData.get("username"),
+      password: formData.get("password"),
+    };
+
+    await signIn("credentials", user);
+  } catch (error) {
+    return {
+      success: false,
+      message: "Invalid username or password",
+    };
+  }
+};
