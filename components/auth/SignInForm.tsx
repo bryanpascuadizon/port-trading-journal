@@ -5,8 +5,8 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Icons } from "@/lib/icons";
-import { signInByOAuth, signInByUsername } from "@/lib/handlers/auth-handler";
-import { useActionState, useTransition } from "react";
+import { signInByOAuth, signInByUsername } from "@/lib/actions/auth-actions";
+import { useActionState } from "react";
 import { APP_NAME, APP_SLOGAN } from "@/lib/constants";
 
 const SignInPage = () => {
@@ -14,7 +14,6 @@ const SignInPage = () => {
     success: false,
     message: "",
   });
-  const [isOAuthPending, startTranstion] = useTransition();
 
   const handleOAuthSignIn = async (provider: string) => {
     await signInByOAuth(provider);
@@ -63,12 +62,17 @@ const SignInPage = () => {
           // className="button"
           variant="outline"
           onClick={() => handleOAuthSignIn("google")}
+          className="bg-white hover:bg-white"
         >
           <Icons.google />
           Google
         </Button>
 
-        <Button variant="outline" onClick={() => handleOAuthSignIn("github")}>
+        <Button
+          variant="outline"
+          className="bg-white hover:bg-white"
+          onClick={() => handleOAuthSignIn("github")}
+        >
           <Icons.github />
           Github
         </Button>

@@ -9,8 +9,8 @@ export function cn(...inputs: ClassValue[]) {
 const scryptAsync = async (password: string, salt: string) => {
   return await new Promise<Buffer>((resolve, reject) => {
     scrypt(password, salt, 64, (error, key) => {
-      if (error) reject;
-      else resolve(key);
+      if (error) reject(error);
+      else resolve(key as Buffer);
     });
   });
 };
