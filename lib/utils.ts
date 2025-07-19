@@ -46,10 +46,10 @@ export const axiosError = (error: unknown) => {
         message: data,
       };
     }
-
-    return {
-      success: false,
-      message: "Something went wrong. Please try again.",
-    };
   }
+
+  return {
+    success: false,
+    message: "Something went wrong. Please try again.",
+  };
 };
