@@ -1,5 +1,4 @@
 import { Icons } from "@/lib/icons";
-import { SetStateAction } from "react";
 
 interface PasswordVisibilityProps {
   showPassword: boolean;
