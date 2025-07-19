@@ -6,14 +6,17 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Icons } from "@/lib/icons";
 import { signInByOAuth, signInByUsername } from "@/lib/actions/auth-actions";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { APP_NAME, APP_SLOGAN } from "@/lib/constants";
+import PasswordVisibility from "./PasswordVisibility";
 
 const SignInPage = () => {
   const [data, action, isLoginPending] = useActionState(signInByUsername, {
     success: false,
     message: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleOAuthSignIn = async (provider: string) => {
     await signInByOAuth(provider);
@@ -37,11 +40,20 @@ const SignInPage = () => {
             <Input id="username" name="username" />
           </div>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 relative">
             <Label htmlFor="password" className="text-gray-700">
               Password
             </Label>
-            <Input id="password" name="password" type="password" />
+            <Input
+              id="password"
+              name="password"
+              type={showPassword ? "text" : "password"}
+              className="pr-10"
+            />
+            <PasswordVisibility
+              showPassword={showPassword}
+              setShowPassword={setShowPassword}
+            />
           </div>
         </div>
 

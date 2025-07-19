@@ -1,10 +1,10 @@
-// components/icons.tsx
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
-import { SiCloudinary } from "react-icons/si";
+import { VscEye, VscEyeClosed } from "react-icons/vsc";
 
 export const Icons = {
   google: FcGoogle,
   github: FaGithub,
-  cloudinary: SiCloudinary,
+  eyeOpen: VscEye,
+  eyeClosed: VscEyeClosed,
 };

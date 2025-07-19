@@ -11,8 +11,14 @@ import Link from "next/link";
 import { signUpUser } from "@/lib/actions/auth-actions";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
+import { useState, useTransition } from "react";
+import PasswordVisibility from "./PasswordVisibility";
 
 const SignUpForm = () => {
+  const [isPending, startTranstion] = useTransition();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -21,10 +27,10 @@ const SignUpForm = () => {
     resolver: zodResolver(signUpSchema),
   });
 
-  const onSubmit = async (data: SignUpSchema) => {
-    const response = await signUpUser(data);
+  const onSubmit = (data: SignUpSchema) => {
+    startTranstion(async () => {
+      const response = await signUpUser(data);
 
-    if (response) {
       if (!response.success) {
         toast(
           <p className="text-sm text-[var(--color-destructive)]">
@@ -41,7 +47,7 @@ const SignUpForm = () => {
         );
         redirect("/sign-in");
       }
-    }
+    });
   };
 
   return (
@@ -81,11 +87,18 @@ const SignUpForm = () => {
             </p>
           )}
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 relative">
             <Label htmlFor="password" className="text-gray-700">
               Password
             </Label>
-            <Input type="password" {...register("password")} />
+            <Input
+              type={showPassword ? "text" : "password"}
+              {...register("password")}
+            />
+            <PasswordVisibility
+              showPassword={showPassword}
+              setShowPassword={setShowPassword}
+            />
           </div>
 
           {errors.password && (
@@ -94,11 +107,18 @@ const SignUpForm = () => {
             </p>
           )}
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 relative">
             <Label htmlFor="confirmPassword" className="text-gray-700">
               Confirm password
             </Label>
-            <Input type="password" {...register("confirmPassword")} />
+            <Input
+              type={showConfirmPassword ? "text" : "password"}
+              {...register("confirmPassword")}
+            />
+            <PasswordVisibility
+              showPassword={showConfirmPassword}
+              setShowPassword={setShowConfirmPassword}
+            />
           </div>
 
           {errors.confirmPassword && (
@@ -109,7 +129,7 @@ const SignUpForm = () => {
         </div>
 
         <Button className="w-full bg-[var(--color-primary)] text-white">
-          Sign Up
+          {isPending ? "Signing up..." : "Sign up"}
         </Button>
 
         <p className="text-center text-sm text-[var(--color-muted-foreground)]">
