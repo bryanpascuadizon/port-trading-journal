@@ -9,6 +9,8 @@ import { SignUpSchema, signUpSchema } from "@/lib/validations/auth-schema";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { signUpUser } from "@/lib/actions/auth-actions";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 const SignUpForm = () => {
   const {
@@ -19,9 +21,32 @@ const SignUpForm = () => {
     resolver: zodResolver(signUpSchema),
   });
 
+  const onSubmit = async (data: SignUpSchema) => {
+    const response = await signUpUser(data);
+
+    if (response) {
+      if (!response.success) {
+        toast(
+          <p className="text-sm text-[var(--color-destructive)]">
+            {response.message}
+          </p>
+        );
+      }
+
+      if (response.success) {
+        toast(
+          <p className="text-sm text-[var(--color-successfull)]">
+            {response.message}
+          </p>
+        );
+        redirect("/sign-in");
+      }
+    }
+  };
+
   return (
     <div className="w-full flex flex-col gap-3">
-      <form onSubmit={handleSubmit(signUpUser)} className="flex flex-col gap-5">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
         <div className="text-center">
           <h2 className="text-3xl font-semibold">{APP_NAME}</h2>
           <p className="text-sm text-[var(--color-muted-foreground)]">
@@ -38,7 +63,7 @@ const SignUpForm = () => {
           </div>
 
           {errors.name && (
-            <p className="text-sm text-center text-[var(--color-destructive)]">
+            <p className="text-sm text-[var(--color-destructive)]">
               {errors.name.message}{" "}
             </p>
           )}
@@ -51,7 +76,7 @@ const SignUpForm = () => {
           </div>
 
           {errors.username && (
-            <p className="text-sm text-center text-[var(--color-destructive)]">
+            <p className="text-sm text-[var(--color-destructive)]">
               {errors.username.message}{" "}
             </p>
           )}
@@ -64,8 +89,21 @@ const SignUpForm = () => {
           </div>
 
           {errors.password && (
-            <p className="text-sm text-center text-[var(--color-destructive)]">
+            <p className="text-sm text-[var(--color-destructive)]">
               {errors.password.message}{" "}
+            </p>
+          )}
+
+          <div className="flex flex-col gap-3">
+            <Label htmlFor="confirmPassword" className="text-gray-700">
+              Confirm password
+            </Label>
+            <Input type="password" {...register("confirmPassword")} />
+          </div>
+
+          {errors.confirmPassword && (
+            <p className="text-sm text-[var(--color-destructive)]">
+              {errors.confirmPassword.message}{" "}
             </p>
           )}
         </div>

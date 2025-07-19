@@ -1,10 +1,10 @@
 import { SignUpSchema } from "../validations/auth-schema";
+import axios from "axios";
 
-export const registerUserData = async (user: SignUpSchema) => {
-  const response = await fetch(``, {
-    method: "POST",
-    body: JSON.stringify(user),
-  }).then((res) => res.json());
+const apiUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+
+export const signUpUserData = async (user: SignUpSchema) => {
+  const response = axios.post(`${apiUrl}/api/sign-up`, user);
 
   return response;
 };

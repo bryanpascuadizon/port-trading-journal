@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { randomBytes, scrypt, timingSafeEqual } from "crypto";
 import { twMerge } from "tailwind-merge";
+import axios from "axios";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -32,4 +33,23 @@ export const verifyPassword = async (
   const keyBuffer = Buffer.from(originalHash, "hex");
 
   return timingSafeEqual(hashedBuffer, keyBuffer);
+};
+
+export const axiosError = (error: unknown) => {
+  if (axios.isAxiosError(error)) {
+    const status = error.response?.status;
+    const data = error.response?.data;
+
+    if (status !== 200) {
+      return {
+        success: false,
+        message: data,
+      };
+    }
+
+    return {
+      success: false,
+      message: "Something went wrong. Please try again.",
+    };
+  }
 };

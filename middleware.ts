@@ -20,7 +20,7 @@ export async function middleware(request: NextRequest) {
 
   if (pathname === "/") {
     return NextResponse.redirect(
-      new URL(token ? "/dashboard" : "/sign-in", request.url)
+      new URL(token ? "/portfolio" : "/sign-in", request.url)
     );
   }
 
@@ -36,7 +36,7 @@ export async function middleware(request: NextRequest) {
   // Redirect to dashboard if already logged in and on public route
   if (isPublicRoute && token) {
     console.log("has token");
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+    return NextResponse.redirect(new URL("/portfolio", request.url));
   }
 
   return NextResponse.next();

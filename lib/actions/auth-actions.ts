@@ -3,8 +3,8 @@
 import { signIn } from "@/auth";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { signUpSchema, SignUpSchema } from "../validations/auth-schema";
-import { hashPassword } from "../utils";
-import { registerUserData } from "../handlers/auth-handlers";
+import { signUpUserData } from "../handlers/auth-handlers";
+import { axiosError } from "../utils";
 
 export const signInByOAuth = async (provider: string) => {
   try {
@@ -47,31 +47,19 @@ export const signUpUser = async (data: SignUpSchema) => {
   try {
     const validatedData = signUpSchema.parse(data);
 
-    const hashedPassword = await hashPassword(validatedData.password);
-
     const user: SignUpSchema = {
-      username: validatedData.name,
+      username: validatedData.username,
       name: validatedData.name,
-      password: hashedPassword,
+      password: validatedData.password,
     };
 
-    const response = await registerUserData(user);
+    const response = await signUpUserData(user);
 
-    if (!response) {
-      return {
-        error: {
-          type: "manual",
-          message: "Something went wrong. Please try again",
-        },
-      };
-    }
-  } catch (error) {
-    console.log(error);
     return {
-      error: {
-        type: "manual",
-        message: "Something went wrong. Please try again",
-      },
+      success: true,
+      message: response.data,
     };
+  } catch (error: unknown) {
+    return axiosError(error);
   }
 };
