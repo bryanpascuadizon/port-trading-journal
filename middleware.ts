@@ -2,7 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { NextResponse, NextRequest } from "next/server";
 
 const publicRoutes = ["/sign-in"];
-const protectedPaths = [/^\/dashboard(\/.*)?$/, /^\/profile(\/.*)?$/];
+const protectedPaths = [/^\/portfolio(\/.*)?$/];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -43,5 +43,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/sign-in", "/dashboard/:path*", "/profile/:path*"],
+  matcher: ["/", "/sign-in", "/portfolio/:path*"],
 };

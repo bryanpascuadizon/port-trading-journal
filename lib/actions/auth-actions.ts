@@ -1,6 +1,6 @@
 "use server";
 
-import { signIn } from "@/auth";
+import { signIn, signOut } from "@/auth";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { signUpSchema, SignUpSchema } from "../validations/auth-schema";
 import { signUpUserData } from "../handlers/auth-handlers";
@@ -62,4 +62,8 @@ export const signUpUser = async (data: SignUpSchema) => {
   } catch (error: unknown) {
     return axiosError(error);
   }
+};
+
+export const signOutUser = async () => {
+  await signOut();
 };
