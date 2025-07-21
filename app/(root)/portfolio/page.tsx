@@ -1,23 +1,21 @@
-"use client";
+import PortfolioOnBoardingForm from "@/components/auth/Portfolio/OnboardingForm";
 
-import { Button } from "@/components/ui/button";
-import { signOutUser } from "@/lib/actions/auth-actions";
-import { useTransition } from "react";
-
-const Portfolio = () => {
-  const [, startTransition] = useTransition();
-
-  const handleLogout = () => {
-    startTransition(async () => {
-      await signOutUser();
-    });
-  };
+const PortfolioOnboardingPage = () => {
   return (
-    <div>
-      Portfolio
-      <Button onClick={handleLogout}>Logout</Button>
+    <div className="max-w-md min-h-screen m-auto flex flex-col gap-3 items-center justify-center p-5">
+      <div className="text-center">
+        <h2 className="text-3xl font-semibold">
+          Welcome to your Trading Journal
+        </h2>
+        <p className="text-sm text-[var(--color-muted-foreground)] mt-4">
+          To begin journaling your trades, start by creating your first
+          portfolio.
+        </p>
+      </div>
+
+      <PortfolioOnBoardingForm />
     </div>
   );
 };
 
-export default Portfolio;
+export default PortfolioOnboardingPage;
