@@ -30,8 +30,7 @@ export const config = {
         password: { type: "password" },
       },
       async authorize(credentials) {
-        if (credentials.username === null || credentials.password === null)
-          return null;
+        if (!credentials.username || !credentials.password) return null;
 
         const credentials_username = credentials.username as string;
         const credentials_password = credentials.password as string;

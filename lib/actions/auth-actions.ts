@@ -36,6 +36,10 @@ export const signInByUsername = async (
     await signIn("credentials", user);
   } catch (error) {
     console.log(error);
+
+    if (isRedirectError(error)) {
+      throw error;
+    }
     return {
       success: false,
       message: "Invalid username or password",

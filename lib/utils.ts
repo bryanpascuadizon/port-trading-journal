@@ -18,7 +18,7 @@ const scryptAsync = async (password: string, salt: string) => {
 
 export const hashPassword = async (password: string) => {
   const salt = randomBytes(16).toString("hex");
-  const derivedKey = await scryptAsync(password, salt);
+  const derivedKey = (await scryptAsync(password, salt)) as Buffer;
 
   return `${salt}:${derivedKey.toString("hex")}`;
 };
@@ -29,7 +29,7 @@ export const verifyPassword = async (
 ) => {
   const [salt, originalHash] = hashedPassword.split(":");
 
-  const hashedBuffer = await scryptAsync(password, salt);
+  const hashedBuffer = (await scryptAsync(password, salt)) as Buffer;
   const keyBuffer = Buffer.from(originalHash, "hex");
 
   return timingSafeEqual(hashedBuffer, keyBuffer);
