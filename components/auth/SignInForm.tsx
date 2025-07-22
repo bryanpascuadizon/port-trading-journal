@@ -4,11 +4,11 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { Icons } from "@/lib/icons";
-import { signInByOAuth, signInByUsername } from "@/lib/actions/auth-actions";
+import { signInByUsername } from "@/lib/actions/auth-actions";
 import { useActionState, useState } from "react";
 import { APP_NAME, APP_SLOGAN } from "@/lib/constants";
 import PasswordVisibility from "./PasswordVisibility";
+import OAuthButton from "./OAuthButton";
 
 const SignInPage = () => {
   const [data, action, isLoginPending] = useActionState(signInByUsername, {
@@ -17,10 +17,6 @@ const SignInPage = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleOAuthSignIn = async (provider: string) => {
-    await signInByOAuth(provider);
-  };
 
   return (
     <div className="w-full flex flex-col gap-3">
@@ -70,24 +66,9 @@ const SignInPage = () => {
           or sign in with
         </div>
 
-        <Button
-          // className="button"
-          variant="outline"
-          onClick={() => handleOAuthSignIn("google")}
-          className="bg-white hover:bg-white"
-        >
-          <Icons.google />
-          Google
-        </Button>
+        <OAuthButton label="Google" provider="google" />
+        <OAuthButton label="Github" provider="github" />
 
-        <Button
-          variant="outline"
-          className="bg-white hover:bg-white"
-          onClick={() => handleOAuthSignIn("github")}
-        >
-          <Icons.github />
-          Github
-        </Button>
         <p className="text-center text-sm text-[var(--color-muted-foreground)]">
           Don’t have an account?{" "}
           <Link

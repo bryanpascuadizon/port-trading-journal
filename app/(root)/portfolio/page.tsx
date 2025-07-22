@@ -1,4 +1,4 @@
-import PortfolioOnBoardingForm from "@/components/auth/Portfolio/OnboardingForm";
+import PortfolioOnBoardingForm from "@/components/Portfolio/OnboardingForm";
 
 const PortfolioOnboardingPage = () => {
   return (
@@ -12,7 +12,6 @@ const PortfolioOnboardingPage = () => {
           portfolio.
         </p>
       </div>
-
       <PortfolioOnBoardingForm />
     </div>
   );
