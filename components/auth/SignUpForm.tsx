@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import { useState, useTransition } from "react";
 import PasswordVisibility from "./PasswordVisibility";
+import ToastMessage from "../ToastMessage";
 
 const SignUpForm = () => {
   const [isPending, startTranstion] = useTransition();
@@ -31,20 +32,11 @@ const SignUpForm = () => {
     startTranstion(async () => {
       const response = await signUpUser(data);
 
-      if (!response.success) {
-        toast(
-          <p className="text-sm text-[var(--color-destructive)]">
-            {response.message}
-          </p>
-        );
-      }
+      toast(
+        <ToastMessage success={response.success} message={response.message} />
+      );
 
       if (response.success) {
-        toast(
-          <p className="text-sm text-[var(--color-successfull)]">
-            {response.message}
-          </p>
-        );
         redirect("/sign-in");
       }
     });

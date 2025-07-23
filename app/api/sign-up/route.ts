@@ -1,4 +1,5 @@
 import prisma from "@/db/prisma";
+import { DEFAULT_ERROR_MESSAGE } from "@/lib/constants";
 import { hashPassword } from "@/lib/utils";
 import { SignUpSchema } from "@/lib/validations/auth-schema";
 import { NextRequest, NextResponse } from "next/server";
@@ -8,7 +9,7 @@ export const POST = async (request: NextRequest) => {
     const body: SignUpSchema = await request.json();
 
     if (!body) {
-      return new NextResponse("Something went wrong. Please try again.", {
+      return new NextResponse(JSON.stringify(DEFAULT_ERROR_MESSAGE), {
         status: 404,
       });
     }
@@ -20,7 +21,7 @@ export const POST = async (request: NextRequest) => {
     });
 
     if (isExisitng) {
-      return new NextResponse(JSON.stringify("Username already exists."), {
+      return new NextResponse(JSON.stringify("Username already exists"), {
         status: 409,
       });
     }
@@ -36,24 +37,18 @@ export const POST = async (request: NextRequest) => {
     });
 
     if (!user) {
-      return new NextResponse(
-        JSON.stringify("Something went wrong. Please try again."),
-        {
-          status: 500,
-        }
-      );
+      return new NextResponse(JSON.stringify(DEFAULT_ERROR_MESSAGE), {
+        status: 500,
+      });
     }
 
-    return new NextResponse(JSON.stringify("Sign up successful."), {
+    return new NextResponse(JSON.stringify("Sign up successful"), {
       status: 200,
     });
   } catch (error) {
     console.log(error);
-    return new NextResponse(
-      JSON.stringify("Something went wrong. Please try again."),
-      {
-        status: 500,
-      }
-    );
+    return new NextResponse(JSON.stringify(DEFAULT_ERROR_MESSAGE), {
+      status: 500,
+    });
   }
 };

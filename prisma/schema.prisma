@@ -15,24 +15,28 @@ datasource db {
 
 model Portfolio {
   id            String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId        String  @db.Uuid
   name          String
   description   String
   broker        String
   accountNumber Int
   isDefault     Boolean
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id             String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name           String?
-  email          String?   @unique(map: "user_email_idx")
-  username       String    @unique(map: "user_username_idx")
+  email          String?     @unique(map: "user_email_idx")
+  username       String      @unique(map: "user_username_idx")
   hashedPassword String?
   emailVerified  DateTime?
-  createdAt      DateTime  @default(now()) @db.Timestamp(6)
-  updatedAt      DateTime  @updatedAt
+  createdAt      DateTime    @default(now()) @db.Timestamp(6)
+  updatedAt      DateTime    @updatedAt
   Account        Account[]
   Session        Session[]
+  Portfolio      Portfolio[]
 }
 
 model Account {
