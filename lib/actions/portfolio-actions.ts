@@ -1,3 +1,4 @@
+import { DEFAULT_ERROR_MESSAGE } from "../constants";
 import {
   createPortfolioData,
   getUserPortfoliosData,
@@ -40,6 +41,10 @@ export const getUserPortfolios = async () => {
       data: response.data,
     };
   } catch (error) {
-    return axiosError(error);
+    console.log("getUserPortfolios: ", error);
+    return {
+      success: false,
+      data: DEFAULT_ERROR_MESSAGE,
+    };
   }
 };

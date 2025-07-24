@@ -2,7 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { NextResponse, NextRequest } from "next/server";
 
 const publicRoutes = ["/sign-in"];
-const protectedPaths = [/^\/portfolio(\/.*)?$/];
+const protectedPaths = [/^\/onboarding(\/.*)?$/, /^\/portfolio(\/.*)?$/];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -18,30 +18,47 @@ export async function middleware(request: NextRequest) {
     secureCookie: process.env.NODE_ENV === "production",
   });
 
-  if (pathname === "/") {
-    return NextResponse.redirect(
-      new URL(token ? "/portfolio" : "/sign-in", request.url)
-    );
-  }
-
   const isPublicRoute = publicRoutes.includes(pathname);
   const isProtected = protectedPaths.some((regex) => regex.test(pathname));
+  const hasPortfolio = token && token.hasPortfolio;
+
+  //handles root route
+  if (pathname === "/") {
+    if (!token) {
+      return NextResponse.redirect(new URL("sign-in", request.url));
+    }
+
+    if (hasPortfolio) {
+      return NextResponse.redirect(
+        new URL("/portfolio/dashboard", request.url)
+      );
+    }
+
+    return NextResponse.redirect(new URL("/onboarding", request.url));
+  }
 
   // Redirect to sign-in if not authenticated
   if (isProtected && !token) {
-    console.log("has no token", request.url);
+    console.log("has no token");
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 
   // Redirect to dashboard if already logged in and on public route
   if (isPublicRoute && token) {
     console.log("has token");
-    return NextResponse.redirect(new URL("/portfolio", request.url));
+
+    if (hasPortfolio) {
+      return NextResponse.redirect(
+        new URL("/portfolio/dashboard", request.url)
+      );
+    }
+
+    return NextResponse.redirect(new URL("/onboarding", request.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/", "/sign-in", "/portfolio/:path*"],
+  matcher: ["/", "/sign-in", "/onboarding/:path*", "/portfolio/:path*"],
 };

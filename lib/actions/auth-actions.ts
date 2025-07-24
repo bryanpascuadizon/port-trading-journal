@@ -55,6 +55,7 @@ export const signUpUser = async (data: SignUpSchema) => {
       username: validatedData.username,
       name: validatedData.name,
       password: validatedData.password,
+      confirmPassword: validatedData.confirmPassword,
     };
 
     const response = await signUpUserData(user);
@@ -69,5 +70,7 @@ export const signUpUser = async (data: SignUpSchema) => {
 };
 
 export const signOutUser = async () => {
-  await signOut();
+  await signOut({
+    redirectTo: "/sign-in", // ✅ Redirect here after logout
+  });
 };

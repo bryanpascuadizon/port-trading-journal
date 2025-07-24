@@ -4,6 +4,7 @@ import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { verifyPassword } from "./lib/utils";
 import prisma from "./db/prisma";
+import { getUserPortfolios } from "./lib/actions/portfolio-actions";
 
 export const config = {
   pages: {
@@ -56,17 +57,26 @@ export const config = {
   ],
   callbacks: {
     async session({ session, token }: any) {
-      console.log("SESSION CALLBACK: ", session, token);
+      //console.log("SESSION CALLBACK: ", session, token);
       session.user.id = token.sub;
       session.user.name = token.name;
       return session;
     },
     async jwt({ user, token }: any) {
-      console.log("JWT CALLBACK: ", token, user);
+      //console.log("JWT CALLBACK: ", token, user);
       if (user) {
         token.id = user.id;
         token.name = user.name || user.email?.split("@")[0] || "User";
         token.email = user.email;
+
+        //Check if user has portfolio
+        const portfolios = await prisma.portfolio.findMany({
+          where: {
+            userId: user.id,
+          },
+        });
+
+        token.hasPortfolio = !!portfolios.length;
       }
 
       return token;

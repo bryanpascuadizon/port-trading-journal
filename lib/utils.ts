@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { randomBytes, scrypt, timingSafeEqual } from "crypto";
 import { twMerge } from "tailwind-merge";
 import axios from "axios";
+import { DEFAULT_ERROR_MESSAGE } from "./constants";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -50,6 +51,6 @@ export const axiosError = (error: unknown) => {
 
   return {
     success: false,
-    message: "Something went wrong. Please try again.",
+    message: DEFAULT_ERROR_MESSAGE,
   };
 };

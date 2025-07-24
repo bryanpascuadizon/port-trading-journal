@@ -22,6 +22,7 @@ export const GET = async () => {
 
     return new NextResponse(JSON.stringify(userPortfolios), { status: 200 });
   } catch (error) {
+    console.log(error);
     return new NextResponse(JSON.stringify(DEFAULT_ERROR_MESSAGE), {
       status: 500,
     });

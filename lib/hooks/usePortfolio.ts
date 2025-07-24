@@ -11,5 +11,7 @@ export const usePortfolio = () => {
     queryFn: getUserPortfolios,
   });
 
-  return { portfolios, isLoading, refetchUserPortfolios };
+  const hasPortfolio = portfolios?.data?.length;
+
+  return { portfolios, isLoading, hasPortfolio, refetchUserPortfolios };
 };
