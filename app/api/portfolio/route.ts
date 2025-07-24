@@ -4,6 +4,30 @@ import { DEFAULT_ERROR_MESSAGE } from "@/lib/constants";
 import { PortfolioSchema } from "@/lib/validations/portfolio-schema";
 import { NextRequest, NextResponse } from "next/server";
 
+export const GET = async () => {
+  try {
+    const session = await auth();
+
+    if (!session?.user?.id) {
+      return new NextResponse(JSON.stringify(DEFAULT_ERROR_MESSAGE), {
+        status: 500,
+      });
+    }
+
+    const userPortfolios = await prisma.portfolio.findMany({
+      where: {
+        userId: session.user.id,
+      },
+    });
+
+    return new NextResponse(JSON.stringify(userPortfolios), { status: 200 });
+  } catch (error) {
+    return new NextResponse(JSON.stringify(DEFAULT_ERROR_MESSAGE), {
+      status: 500,
+    });
+  }
+};
+
 export const POST = async (request: NextRequest) => {
   try {
     const body: PortfolioSchema = await request.json();

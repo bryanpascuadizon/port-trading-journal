@@ -1,4 +1,7 @@
-import { createPortfolioData } from "../handlers/portfolio-handlers";
+import {
+  createPortfolioData,
+  getUserPortfoliosData,
+} from "../handlers/portfolio-handlers";
 import { axiosError } from "../utils";
 import {
   PortfolioSchema,
@@ -24,6 +27,19 @@ export const createPorfolio = async (data: PortfolioSchema) => {
       message: response.data,
     };
   } catch (error: unknown) {
+    return axiosError(error);
+  }
+};
+
+export const getUserPortfolios = async () => {
+  try {
+    const response = await getUserPortfoliosData();
+
+    return {
+      success: true,
+      data: response.data,
+    };
+  } catch (error) {
     return axiosError(error);
   }
 };

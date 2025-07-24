@@ -6,3 +6,9 @@ export const createPortfolioData = async (data: PortfolioSchema) => {
 
   return response;
 };
+
+export const getUserPortfoliosData = async () => {
+  const response = await axios.get(`/api/portfolio`);
+
+  return response;
+};
