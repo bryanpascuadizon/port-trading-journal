@@ -1,20 +1,9 @@
-"use client";
-
-import { usePortfolio } from "@/lib/hooks/usePortfolio";
-import { redirect } from "next/navigation";
-
 const Dashboard = () => {
-  const { hasPortfolio, isLoading } = usePortfolio();
-
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (!hasPortfolio) {
-    redirect("/onboarding");
-  }
-
-  return <p>Dashboard</p>;
+  return (
+    <div>
+      <h1 className="portfolio-title">Dashboard</h1>
+    </div>
+  );
 };
 
 export default Dashboard;

@@ -1,12 +1,5 @@
-import Header from "@/components/Header";
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  return (
-    <main className="">
-      <Header />
-      {children}
-    </main>
-  );
+  return <main className="main-container">{children}</main>;
 }
