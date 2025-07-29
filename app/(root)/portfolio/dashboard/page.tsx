@@ -1,9 +1,20 @@
-const Dashboard = () => {
-  return (
-    <div>
-      <h1 className="portfolio-title">Dashboard</h1>
-    </div>
-  );
+"use client";
+
+import { usePortfolio } from "@/lib/hooks/usePortfolio";
+import { redirect } from "next/navigation";
+
+const DashboardPage = () => {
+  const { defaultPortfolio, isLoading } = usePortfolio();
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (defaultPortfolio) {
+    redirect(`/portfolio/dashboard/${defaultPortfolio.id}`);
+  }
+
+  redirect("/onboarding");
 };
 
-export default Dashboard;
+export default DashboardPage;

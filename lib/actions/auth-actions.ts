@@ -28,12 +28,12 @@ export const signInByUsername = async (
       };
     }
 
-    const user = {
+    await signIn("credentials", {
       username: formData.get("username"),
       password: formData.get("password"),
-    };
-
-    await signIn("credentials", user);
+      redirect: true,
+      redirectTo: "/portfolio/dashboard",
+    });
   } catch (error) {
     console.log(error);
 

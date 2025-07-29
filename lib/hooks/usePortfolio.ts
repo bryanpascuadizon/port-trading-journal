@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getUserPortfolios } from "../actions/portfolio-actions";
+import { Portfolio } from "@prisma/client";
 
 export const usePortfolio = () => {
   const {
@@ -11,7 +12,8 @@ export const usePortfolio = () => {
     queryFn: getUserPortfolios,
   });
 
-  const hasPortfolio = portfolios?.data?.length;
+  const defaultPortfolio: Portfolio =
+    portfolios && portfolios?.data.find((port: Portfolio) => port.isDefault);
 
-  return { portfolios, isLoading, hasPortfolio, refetchUserPortfolios };
+  return { portfolios, isLoading, defaultPortfolio, refetchUserPortfolios };
 };

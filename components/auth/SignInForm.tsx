@@ -11,12 +11,11 @@ import PasswordVisibility from "./PasswordVisibility";
 import OAuthButton from "./OAuthButton";
 
 const SignInPage = () => {
+  const [isVisiblePassword, setIsVisiblePassword] = useState(false);
   const [data, action, isLoginPending] = useActionState(signInByUsername, {
     success: false,
     message: "",
   });
-
-  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="w-full flex flex-col gap-3">
@@ -43,12 +42,12 @@ const SignInPage = () => {
             <Input
               id="password"
               name="password"
-              type={showPassword ? "text" : "password"}
+              type={isVisiblePassword ? "text" : "password"}
               className="pr-10"
             />
             <PasswordVisibility
-              showPassword={showPassword}
-              setShowPassword={setShowPassword}
+              showPassword={isVisiblePassword}
+              setShowPassword={setIsVisiblePassword}
             />
           </div>
         </div>

@@ -20,7 +20,7 @@ export async function middleware(request: NextRequest) {
 
   const isPublicRoute = publicRoutes.includes(pathname);
   const isProtected = protectedPaths.some((regex) => regex.test(pathname));
-  const hasPortfolio = token && token.hasPortfolio;
+  //const defaultPortfolio = token && token.defaultPortfolio;
 
   //handles root route
   if (pathname === "/") {
@@ -28,13 +28,12 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL("sign-in", request.url));
     }
 
-    if (hasPortfolio) {
-      return NextResponse.redirect(
-        new URL("/portfolio/dashboard", request.url)
-      );
-    }
+    return NextResponse.redirect(
+      new URL(`/portfolio/dashboard/`, request.url),
+      307
+    );
 
-    return NextResponse.redirect(new URL("/onboarding", request.url));
+    //return NextResponse.redirect(new URL("/onboarding", request.url));
   }
 
   // Redirect to sign-in if not authenticated
@@ -47,13 +46,12 @@ export async function middleware(request: NextRequest) {
   if (isPublicRoute && token) {
     console.log("has token");
 
-    if (hasPortfolio) {
-      return NextResponse.redirect(
-        new URL("/portfolio/dashboard", request.url)
-      );
-    }
+    return NextResponse.redirect(
+      new URL(`/portfolio/dashboard/`, request.url),
+      307
+    );
 
-    return NextResponse.redirect(new URL("/onboarding", request.url));
+    // return NextResponse.redirect(new URL("/onboarding", request.url));
   }
 
   return NextResponse.next();

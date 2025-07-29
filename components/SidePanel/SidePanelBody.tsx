@@ -1,18 +1,33 @@
+"use client";
+
 import Link from "next/link";
 import { SidebarContent } from "../ui/sidebar";
 import { Icons } from "@/lib/icons";
 import SidePanelLogoutButton from "./SidePanelLogoutButton";
+import PortfolioList from "./PortfolioList";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 
 const SidePanelBody = () => {
+  const params = useParams();
+  const [portfolioId, setPortfolioId] = useState("");
+
+  useEffect(() => {
+    if (params.portfolioId) {
+      const paramsPortfolioId = params.portfolioId as string;
+      setPortfolioId(paramsPortfolioId);
+    }
+  }, [params]);
+
   const links = [
     {
       label: "Dashboard",
-      href: "/portfolio/dashboard",
+      href: `/portfolio/dashboard/${portfolioId}`,
       icon: <Icons.panelDashboard className="w-5 h-5" />,
     },
     {
       label: "Trades",
-      href: "/portfolio/trades",
+      href: `/portfolio/trades/${portfolioId}`,
       icon: <Icons.panelTrades className="w-5 h-5" />,
     },
   ];
@@ -20,6 +35,10 @@ const SidePanelBody = () => {
     <SidebarContent className="side-panel-body">
       <div className="side-panel-body-section">
         <p className="side-panel-body-title">PORTFOLIO</p>
+        <PortfolioList
+          portfolioId={portfolioId}
+          setPortfolioId={setPortfolioId}
+        />
         <div className="side-panel-body-content ">
           {links.map((link, index) => (
             <Link
