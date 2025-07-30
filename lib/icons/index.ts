@@ -4,6 +4,7 @@ import { IoEye, IoEyeOff } from "react-icons/io5";
 import { MdSpaceDashboard } from "react-icons/md";
 import { MdCandlestickChart } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
+import { MdCloudUpload } from "react-icons/md";
 
 export const Icons = {
   //[Login]
@@ -18,4 +19,5 @@ export const Icons = {
 
   //[Generic]
   logout: IoLogOut,
+  upload: MdCloudUpload,
 };

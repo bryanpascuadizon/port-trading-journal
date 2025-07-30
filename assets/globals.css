@@ -149,7 +149,7 @@
   }
 
   .side-panel-header {
-    @apply font-semibold text-xl pb-5;
+    @apply font-semibold text-2xl pb-5;
   }
 
   .side-panel-body {

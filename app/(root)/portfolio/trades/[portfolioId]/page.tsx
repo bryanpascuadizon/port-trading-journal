@@ -1,14 +1,15 @@
-"use client";
+import TradesHeader from "@/components/Trades/TradesHeader";
+import { Metadata } from "next";
 
-import { useParams } from "next/navigation";
+export const metadata: Metadata = {
+  title: "Trades",
+};
 
 const Trades = () => {
-  const params = useParams();
   return (
-    <div>
-      <h1 className="portfolio-title">Trades</h1>
-      <p>{params.portfolioId}</p>
-    </div>
+    <>
+      <TradesHeader />
+    </>
   );
 };
 
