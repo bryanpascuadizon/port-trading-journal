@@ -15,7 +15,7 @@ const CreateTradeDialog = () => {
       <SheetTrigger asChild>
         <Button>Create Trade</Button>
       </SheetTrigger>
-      <SheetContent className="p-2">
+      <SheetContent className="p-2 overflow-auto">
         <SheetHeader>
           <SheetTitle asChild>
             <h1 className="font-semibold text-2xl">Create Trade</h1>
