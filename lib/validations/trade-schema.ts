@@ -50,7 +50,7 @@ export const tradeSchema = z.object({
     )
     .refine(
       (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
-      "Unsupported file type. Only JPEG, JPG, PNG, or WEBP allowed"
+      "Unsupported file type. Only .jpeg, .jpg, .png, or .webp allowed"
     ),
 });
 

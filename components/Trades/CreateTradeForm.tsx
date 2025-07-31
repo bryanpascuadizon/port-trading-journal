@@ -8,9 +8,10 @@ import CreateTradePosition from "./CreateTradePosition";
 import { FieldError, FieldErrorsImpl, Merge, useForm } from "react-hook-form";
 import { tradeSchema, TradeSchema } from "@/lib/validations/trade-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { createTrade } from "@/lib/actions/trade-actions";
 import CreateTradeDate from "./CreateTradeDate";
+import Image from "next/image";
 
 const CreateTradeForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -23,10 +24,9 @@ const CreateTradeForm = () => {
   } = useForm<TradeSchema>({
     resolver: zodResolver(tradeSchema),
   });
-  const [preview, setPreview] = useState<string | null>(null);
-
   const entryDate = watch("entryDate");
   const exitDate = watch("exitDate");
+  const screenshot = watch("screenshot");
 
   const onSubmit = (data: TradeSchema) => {
     startTransition(async () => {
@@ -51,7 +51,7 @@ const CreateTradeForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="p-4 flex flex-col gap-5 mt-[-30px]"
+      className="p-4 flex flex-col gap-3 mt-[-30px] relative"
     >
       {/* Symbol */}
       <div className="flex flex-col gap-1">
@@ -118,17 +118,25 @@ const CreateTradeForm = () => {
       {/* Screenshot */}
       <div className="flex flex-col gap-1">
         <Label>Upload Screenshot </Label>
-        <CreateTradeUploadFile
-          register={register}
-          setValue={setValue}
-          preview={preview}
-          setPreview={setPreview}
-        />
+        <CreateTradeUploadFile setValue={setValue} screenshot={screenshot} />
+        {screenshot && !errors.screenshot && (
+          <Image
+            alt=""
+            height={200}
+            width={400}
+            src={URL.createObjectURL(screenshot)}
+            className="mt-1 object-contain rounded-lg"
+          />
+        )}
         {errors.screenshot && renderErrorMessage(errors.screenshot.message)}
       </div>
 
       {/* Create trade button */}
-      <Button>{isPending ? "Creating..." : "Create Trade"}</Button>
+      <div className="sticky bottom-0 p-3">
+        <Button className="w-full rounded-full">
+          {isPending ? "Creating..." : "Create Trade"}
+        </Button>
+      </div>
     </form>
   );
 };
