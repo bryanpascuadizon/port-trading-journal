@@ -19,8 +19,8 @@ A clean and simple web-based Trading Journal to help traders track and analyze t
 
 - **Framework**: [Next.js 14](https://nextjs.org/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/)
-- **Auth**: Custom authentication or [NextAuth.js](https://next-auth.js.org/) *(depending on your setup)*
-- **Database**: PostgreSQL via [Prisma](https://www.prisma.io/) *(optional)*
+- **Auth**: Custom authentication or [NextAuth.js](https://next-auth.js.org/) _(depending on your setup)_
+- **Database**: PostgreSQL via [Prisma](https://www.prisma.io/) _(optional)_
 - **Image Storage**: [Cloudinary](https://cloudinary.com/)
 
 ---
@@ -29,11 +29,12 @@ A clean and simple web-based Trading Journal to help traders track and analyze t
 
 ```bash
 # Clone the repository
-git clone https://github.com/bryapascuadizon/trading-journal.git
-cd trading-journal
+git clone https://github.com/bryanpascuadizon/port-trading-journal.git
+cd port-trading-journal
 
 # Install dependencies
 npm install
 
 # Start the dev server
 npm run dev
+```
