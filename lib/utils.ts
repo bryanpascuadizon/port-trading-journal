@@ -3,6 +3,7 @@ import { randomBytes, scrypt, timingSafeEqual } from "crypto";
 import { twMerge } from "tailwind-merge";
 import axios from "axios";
 import { DEFAULT_ERROR_MESSAGE } from "./constants";
+import { format } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -37,6 +38,7 @@ export const verifyPassword = async (
 };
 
 export const axiosError = (error: unknown) => {
+  console.log("axios error: ", error);
   if (axios.isAxiosError(error)) {
     const status = error.response?.status;
     const data = error.response?.data;
@@ -53,4 +55,8 @@ export const axiosError = (error: unknown) => {
     success: false,
     message: DEFAULT_ERROR_MESSAGE,
   };
+};
+
+export const formatDateToUTCDate = (date: Date) => {
+  return format(new Date(date), "yyyy-MM-dd'T'HH:mm:ss'Z'");
 };

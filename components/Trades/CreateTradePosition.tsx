@@ -2,22 +2,15 @@
 
 import { TradeSchema } from "@/lib/validations/trade-schema";
 import { Label } from "../ui/label";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { UseFormRegister } from "react-hook-form";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { LONG, SHORT } from "@/lib/constants";
-import { ReactNode } from "react";
 
 interface CreateTradePositionProps {
   register: UseFormRegister<TradeSchema>;
-  errors: FieldErrors<TradeSchema>;
-  renderErrorMessage: (errorMessage: string | undefined) => ReactNode;
 }
 
-const CreateTradePosition = ({
-  register,
-  errors,
-  renderErrorMessage,
-}: CreateTradePositionProps) => {
+const CreateTradePosition = ({ register }: CreateTradePositionProps) => {
   return (
     <>
       <Label>Position </Label>
@@ -39,7 +32,6 @@ const CreateTradePosition = ({
           </Label>
         </div>
       </RadioGroup>
-      {errors.position && renderErrorMessage(errors.position.message)}
     </>
   );
 };

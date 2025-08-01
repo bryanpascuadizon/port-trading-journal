@@ -12,9 +12,14 @@ import { useTransition } from "react";
 import { createTrade } from "@/lib/actions/trade-actions";
 import CreateTradeDate from "./CreateTradeDate";
 import Image from "next/image";
+import { useParams } from "next/navigation";
+import ToastMessage from "../ToastMessage";
+import { toast } from "sonner";
 
-const CreateTradeForm = () => {
+const CreateTradeForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
   const [isPending, startTransition] = useTransition();
+  const params = useParams();
+
   const {
     register,
     handleSubmit,
@@ -30,7 +35,15 @@ const CreateTradeForm = () => {
 
   const onSubmit = (data: TradeSchema) => {
     startTransition(async () => {
-      await createTrade(data);
+      const response = await createTrade(data, params.portfolioId as string);
+
+      if (response.success) {
+        toast(
+          <ToastMessage success={response.success} message={response.message} />
+        );
+
+        setOpen(false);
+      }
     });
   };
 
@@ -51,26 +64,22 @@ const CreateTradeForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="p-4 flex flex-col gap-3 mt-[-30px] relative"
+      className="p-5 flex flex-col gap-3 mt-[-40px] relative"
     >
       {/* Symbol */}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2">
         <Label>Symbol</Label>
         <Input {...register("symbol")} placeholder="BTCUSD, AAPL, EURUSD" />
         {errors.symbol && renderErrorMessage(errors.symbol.message)}
       </div>
 
       {/* Position */}
-      <div className="flex flex-col gap-1">
-        <CreateTradePosition
-          register={register}
-          errors={errors}
-          renderErrorMessage={renderErrorMessage}
-        />
+      <div className="flex flex-col gap-2">
+        <CreateTradePosition register={register} />
       </div>
 
       {/* Entry Date */}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2">
         <Label>Entry Date </Label>
         <CreateTradeDate
           setValue={setValue}
@@ -81,42 +90,42 @@ const CreateTradeForm = () => {
       </div>
 
       {/* Entry Price */}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2">
         <Label>Entry Price </Label>
         <Input {...register("entryPrice")} placeholder="100.00" />
         {errors.entryPrice && renderErrorMessage(errors.entryPrice.message)}
       </div>
 
       {/* Exit Date */}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2">
         <Label>Exit Date </Label>
         <CreateTradeDate setValue={setValue} date={exitDate} type="exitDate" />
         {errors.exitDate && renderErrorMessage(errors.exitDate.message)}
       </div>
 
       {/* Exit Price */}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2">
         <Label>Exit Price </Label>
         <Input {...register("exitPrice")} placeholder="100.00" />
         {errors.exitPrice && renderErrorMessage(errors.exitPrice.message)}
       </div>
 
       {/* Lot Size */}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2">
         <Label>Lot Size</Label>
         <Input {...register("lotSize")} placeholder="0.1" />
         {errors.lotSize && renderErrorMessage(errors.lotSize.message)}
       </div>
 
       {/* Profit and Loss in $ */}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2">
         <Label>PnL (Profit and Loss in $) </Label>
         <Input type="number" {...register("pnl")} placeholder="100.00" />
         {errors.pnl && renderErrorMessage(errors.pnl.message)}
       </div>
 
       {/* Screenshot */}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2">
         <Label>Upload Screenshot </Label>
         <CreateTradeUploadFile setValue={setValue} screenshot={screenshot} />
         {screenshot && !errors.screenshot && (

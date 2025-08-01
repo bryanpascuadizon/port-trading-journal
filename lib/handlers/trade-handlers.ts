@@ -1,5 +1,10 @@
-import { TradeSchema } from "../validations/trade-schema";
+import axios from "axios";
+import { Trade } from "../types";
 
-export const createTradeData = async (data: TradeSchema) => {
-  console.log("TRADE DATA HANDLER", data);
+const apiUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+
+export const createTradeData = async (data: Trade) => {
+  const response = await axios.post(`${apiUrl}/api/trades`, data);
+
+  return response;
 };

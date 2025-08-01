@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { Button } from "../ui/button";
 import {
   Sheet,
@@ -10,8 +13,9 @@ import {
 import CreateTradeForm from "./CreateTradeForm";
 
 const CreateTradeDialog = () => {
+  const [open, setOpen] = useState(false);
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button>Create Trade</Button>
       </SheetTrigger>
@@ -27,7 +31,7 @@ const CreateTradeDialog = () => {
         </SheetHeader>
 
         {/* Sheet Body */}
-        <CreateTradeForm />
+        <CreateTradeForm setOpen={setOpen} />
       </SheetContent>
     </Sheet>
   );

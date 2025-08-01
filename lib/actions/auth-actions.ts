@@ -1,6 +1,6 @@
 "use server";
 
-import { signIn, signOut } from "@/auth";
+import { auth, signIn, signOut } from "@/auth";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { signUpSchema, SignUpSchema } from "../validations/auth-schema";
 import { signUpUserData } from "../handlers/auth-handlers";
@@ -73,4 +73,9 @@ export const signOutUser = async () => {
   await signOut({
     redirectTo: "/sign-in", // ✅ Redirect here after logout
   });
+};
+
+export const getUserSession = async () => {
+  const session = await auth();
+  return session?.user;
 };

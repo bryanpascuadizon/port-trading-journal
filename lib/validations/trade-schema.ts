@@ -15,13 +15,13 @@ export const tradeSchema = z.object({
     .max(6, "Symbol must be at most 6 characters"),
   position: z.enum(["long", "short"]),
   entryDate: z
-    .any()
+    .date()
     .refine(
       (val) => val instanceof Date && !isNaN(val.getTime()),
       "Pick an entry date"
     ),
   exitDate: z
-    .any()
+    .date()
     .refine(
       (val) => val instanceof Date && !isNaN(val.getTime()),
       "Pick an exit date"
