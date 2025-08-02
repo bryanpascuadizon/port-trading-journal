@@ -60,3 +60,13 @@ export const axiosError = (error: unknown) => {
 export const formatDateToUTCDate = (date: Date) => {
   return format(new Date(date), "yyyy-MM-dd'T'HH:mm:ss'Z'");
 };
+
+export const currencyFormatter = new Intl.NumberFormat("en-US", {
+  currency: "USD",
+  style: "currency",
+  minimumFractionDigits: 2,
+});
+
+export const currencyIsNegative = (currency: number) => {
+  return currency < 0 ? "text-negative" : "text-positive";
+};

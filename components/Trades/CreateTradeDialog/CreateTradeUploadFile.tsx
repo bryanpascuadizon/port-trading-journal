@@ -5,7 +5,7 @@ import { TradeSchema } from "@/lib/validations/trade-schema";
 import { useCallback } from "react";
 import { UseFormSetValue } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
-import { Input } from "../ui/input";
+import { Input } from "@/components/ui/input";
 
 interface CreateTradeUploadFile {
   setValue: UseFormSetValue<TradeSchema>;

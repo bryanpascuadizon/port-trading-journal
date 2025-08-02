@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import CreateTradeUploadFile from "./CreateTradeUploadFile";
 import CreateTradePosition from "./CreateTradePosition";
 import { FieldError, FieldErrorsImpl, Merge, useForm } from "react-hook-form";
@@ -13,10 +13,18 @@ import { createTrade } from "@/lib/actions/trade-actions";
 import CreateTradeDate from "./CreateTradeDate";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import ToastMessage from "../ToastMessage";
+import ToastMessage from "@/components/ToastMessage";
 import { toast } from "sonner";
 
-const CreateTradeForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
+interface CreateTradeForm {
+  refetchPortfolioTrades: () => void;
+  setOpen: (open: boolean) => void;
+}
+
+const CreateTradeForm = ({
+  setOpen,
+  refetchPortfolioTrades,
+}: CreateTradeForm) => {
   const [isPending, startTransition] = useTransition();
   const params = useParams();
 
@@ -38,6 +46,8 @@ const CreateTradeForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
       const response = await createTrade(data, params.portfolioId as string);
 
       if (response.success) {
+        refetchPortfolioTrades();
+
         toast(
           <ToastMessage success={response.success} message={response.message} />
         );
@@ -120,7 +130,7 @@ const CreateTradeForm = ({ setOpen }: { setOpen: (open: boolean) => void }) => {
       {/* Profit and Loss in $ */}
       <div className="flex flex-col gap-2">
         <Label>PnL (Profit and Loss in $) </Label>
-        <Input type="number" {...register("pnl")} placeholder="100.00" />
+        <Input {...register("pnl")} placeholder="100.00" />
         {errors.pnl && renderErrorMessage(errors.pnl.message)}
       </div>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -9,10 +9,16 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "../ui/sheet";
+} from "@/components/ui/sheet";
 import CreateTradeForm from "./CreateTradeForm";
 
-const CreateTradeDialog = () => {
+interface CreateTradeDialogProps {
+  refetchPortfolioTrades: () => void;
+}
+
+const CreateTradeDialog = ({
+  refetchPortfolioTrades,
+}: CreateTradeDialogProps) => {
   const [open, setOpen] = useState(false);
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -31,7 +37,10 @@ const CreateTradeDialog = () => {
         </SheetHeader>
 
         {/* Sheet Body */}
-        <CreateTradeForm setOpen={setOpen} />
+        <CreateTradeForm
+          setOpen={setOpen}
+          refetchPortfolioTrades={refetchPortfolioTrades}
+        />
       </SheetContent>
     </Sheet>
   );

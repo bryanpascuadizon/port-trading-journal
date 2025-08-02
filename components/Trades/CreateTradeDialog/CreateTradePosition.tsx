@@ -1,9 +1,9 @@
 "use client";
 
 import { TradeSchema } from "@/lib/validations/trade-schema";
-import { Label } from "../ui/label";
+import { Label } from "@/components/ui/label";
 import { UseFormRegister } from "react-hook-form";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { LONG, SHORT } from "@/lib/constants";
 
 interface CreateTradePositionProps {

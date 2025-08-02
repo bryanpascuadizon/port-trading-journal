@@ -34,11 +34,11 @@ const SidePanelBody = () => {
   return (
     <SidebarContent className="side-panel-body">
       <div className="side-panel-body-section">
-        <p className="side-panel-body-title">PORTFOLIO</p>
         <PortfolioList
           portfolioId={portfolioId}
           setPortfolioId={setPortfolioId}
         />
+        <p className="side-panel-body-title">PORTFOLIO</p>
         <div className="side-panel-body-content ">
           {links.map((link, index) => (
             <Link

@@ -1,5 +1,5 @@
-import { SidebarTrigger } from "../ui/sidebar";
-import CreateTradeDialog from "./CreateTradeDialog";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+import CreateTradeDialog from "./CreateTradeDialog/CreateTradeDialog";
 
 const TradesHeader = () => {
   return (
@@ -8,8 +8,6 @@ const TradesHeader = () => {
         <SidebarTrigger />
         <h1 className="font-semibold text-2xl">Trades</h1>
       </div>
-
-      <CreateTradeDialog />
     </div>
   );
 };

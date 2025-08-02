@@ -40,7 +40,6 @@ export const tradeSchema = z.object({
     .refine((val) => !isNaN(Number(val)), "Lot size must be a valid number"),
   pnl: z
     .string()
-    .refine((val) => Number(val) > 0, "Pnl must be greater than 0")
     .refine((val) => !isNaN(Number(val)), "Pnl must be a valid number"),
   screenshot: z
     .custom<File>((file) => file instanceof File, "No file selected")

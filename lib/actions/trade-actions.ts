@@ -1,11 +1,41 @@
 "use server";
 
-import { createTradeData } from "../handlers/trade-handlers";
+import {
+  createTradeData,
+  getTradesByPortfolioData,
+} from "../handlers/trade-handlers";
 import { axiosError, formatDateToUTCDate } from "../utils";
 import { TradeSchema, tradeSchema } from "../validations/trade-schema";
 import { Trade } from "../types";
 import { UNAUTHORIZED_USER_NO_SESSION } from "../constants";
 import { getUserSession } from "./auth-actions";
+import { Trades } from "@prisma/client";
+import { AxiosResponse } from "axios";
+
+export const getTradesByPortfolio = async (portfolioId: string) => {
+  try {
+    const user = await getUserSession();
+
+    if (!user) {
+      return {
+        success: false,
+        message: UNAUTHORIZED_USER_NO_SESSION,
+      };
+    }
+
+    const trades: AxiosResponse<Trades[]> = await getTradesByPortfolioData(
+      portfolioId
+    );
+
+    return {
+      success: true,
+      data: trades.data,
+    };
+  } catch (error) {
+    axiosError(error);
+  }
+};
+
 export const createTrade = async (data: TradeSchema, portfolioId: string) => {
   try {
     const validatedData = tradeSchema.parse(data);

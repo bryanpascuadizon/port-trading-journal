@@ -1,11 +1,15 @@
 import { cn } from "@/lib/utils";
-import { Button } from "../ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { CalendarIcon } from "lucide-react";
 import { UseFormSetValue } from "react-hook-form";
 import { TradeSchema } from "@/lib/validations/trade-schema";
 import { format } from "date-fns";
-import { Calendar } from "../ui/calendar";
+import { Calendar } from "@/components/ui/calendar";
 
 interface CreateTradeDateProps {
   setValue: UseFormSetValue<TradeSchema>;
