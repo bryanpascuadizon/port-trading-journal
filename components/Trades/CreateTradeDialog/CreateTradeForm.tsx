@@ -15,6 +15,7 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import ToastMessage from "@/components/ToastMessage";
 import { toast } from "sonner";
+import { LONG } from "@/lib/constants";
 
 interface CreateTradeForm {
   refetchPortfolioTrades: () => void;
@@ -33,10 +34,15 @@ const CreateTradeForm = ({
     handleSubmit,
     watch,
     setValue,
+    control,
     formState: { errors },
   } = useForm<TradeSchema>({
     resolver: zodResolver(tradeSchema),
+    defaultValues: {
+      position: LONG,
+    },
   });
+
   const entryDate = watch("entryDate");
   const exitDate = watch("exitDate");
   const screenshot = watch("screenshot");
@@ -85,7 +91,7 @@ const CreateTradeForm = ({
 
       {/* Position */}
       <div className="flex flex-col gap-2">
-        <CreateTradePosition register={register} />
+        <CreateTradePosition control={control} />
       </div>
 
       {/* Entry Date */}

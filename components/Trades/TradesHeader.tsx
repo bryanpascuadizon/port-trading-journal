@@ -1,5 +1,4 @@
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import CreateTradeDialog from "./CreateTradeDialog/CreateTradeDialog";
 
 const TradesHeader = () => {
   return (
