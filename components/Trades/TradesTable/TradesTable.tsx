@@ -33,7 +33,7 @@ const TradesTable = ({ trades }: TradesTableProps) => {
           <TableHeader>
             <TableRow className="bg-gray-100">
               {tableHeaders.map((header, index) => (
-                <TableHead key={index} className="p-5 text-center">
+                <TableHead key={index} className="p-5 text-center font-bold">
                   {header}
                 </TableHead>
               ))}
