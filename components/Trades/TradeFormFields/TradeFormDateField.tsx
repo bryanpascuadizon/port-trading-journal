@@ -11,13 +11,13 @@ import { TradeSchema } from "@/lib/validations/trade-schema";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 
-interface CreateTradeDateProps {
+interface TradeFormDateProps {
   setValue: UseFormSetValue<TradeSchema>;
   date: Date;
   type: string;
 }
 
-const CreateTradeDate = ({ setValue, date, type }: CreateTradeDateProps) => {
+const TradeFormDate = ({ setValue, date, type }: TradeFormDateProps) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -35,7 +35,9 @@ const CreateTradeDate = ({ setValue, date, type }: CreateTradeDateProps) => {
           selected={date}
           captionLayout="dropdown"
           onSelect={(date) =>
-            setValue(type === "entryDate" ? "entryDate" : "exitDate", date!)
+            setValue(type === "entryDate" ? "entryDate" : "exitDate", date!, {
+              shouldValidate: true,
+            })
           }
         />
       </PopoverContent>
@@ -43,4 +45,4 @@ const CreateTradeDate = ({ setValue, date, type }: CreateTradeDateProps) => {
   );
 };
 
-export default CreateTradeDate;
+export default TradeFormDate;

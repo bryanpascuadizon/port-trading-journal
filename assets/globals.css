@@ -149,6 +149,10 @@
     @apply text-green-700;
   }
 
+  .trade-form-field {
+    @apply flex flex-col gap-1;
+  }
+
   /*Side Panel*/
   .side-panel,
   .side-panel-header,

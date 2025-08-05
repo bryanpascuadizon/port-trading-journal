@@ -17,3 +17,9 @@ export const createTradeData = async (data: Trade) => {
 
   return response;
 };
+
+export const updateTradeData = async (data: Trades) => {
+  const response = await axios.patch(`${apiUrl}/api/trades`, data);
+
+  return response;
+};

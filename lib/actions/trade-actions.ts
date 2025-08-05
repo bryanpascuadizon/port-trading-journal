@@ -9,8 +9,9 @@ import { TradeSchema, tradeSchema } from "../validations/trade-schema";
 import { Trade } from "../types";
 import { UNAUTHORIZED_USER_NO_SESSION } from "../constants";
 import { getUserSession } from "./auth-actions";
-import { Trades } from "@prisma/client";
+import { Prisma, Trades } from "@prisma/client";
 import { AxiosResponse } from "axios";
+import { uploadImageToCloudinary } from "../cloudinary";
 
 export const getTradesByPortfolio = async (portfolioId: string) => {
   try {
@@ -44,6 +45,13 @@ export const createTrade = async (data: TradeSchema, portfolioId: string) => {
       data.screenshot
     );
 
+    if (!public_id || !secure_url) {
+      return {
+        success: false,
+        message: "Something went wrong uploading image",
+      };
+    }
+
     const user = await getUserSession();
 
     if (!user) {
@@ -54,7 +62,7 @@ export const createTrade = async (data: TradeSchema, portfolioId: string) => {
     }
 
     const tradeData: Trade = {
-      symbol: validatedData.symbol,
+      symbol: validatedData.symbol.toUpperCase(),
       position: validatedData.position,
       entryDate: new Date(formatDateToUTCDate(validatedData.entryDate)),
       exitDate: new Date(formatDateToUTCDate(validatedData.exitDate)),
@@ -79,29 +87,42 @@ export const createTrade = async (data: TradeSchema, portfolioId: string) => {
   }
 };
 
-export const uploadImageToCloudinary = async (file: File) => {
+export const updateTrade = async (data: TradeSchema, trade: Trades) => {
   try {
-    const formData = new FormData();
-    const cloudinary_cloud_name = process.env.CLOUDINARY_CLOUD_NAME;
-    const cloudinary_upload_preset = process.env.CLOUDINARY_UPLOAD_PRESET;
-    const cloudianry_asset_folder = process.env.CLOUDINARY_ASSET_FOLDER;
+    const validatedData = tradeSchema.parse(data);
 
-    formData.append("file", file);
-    formData.append("upload_preset", `${cloudinary_upload_preset}`);
-    formData.append("asset_folder", `${cloudianry_asset_folder}`);
+    const updatedTrade: Trades = {
+      ...trade,
+      symbol: validatedData.symbol,
+      position: validatedData.position,
+      entryDate: new Date(formatDateToUTCDate(validatedData.entryDate)),
+      exitDate: new Date(formatDateToUTCDate(validatedData.exitDate)),
+      entryPrice: new Prisma.Decimal(validatedData.entryPrice),
+      exitPrice: new Prisma.Decimal(validatedData.exitPrice),
+      lotSize: new Prisma.Decimal(validatedData.lotSize),
+      pnl: new Prisma.Decimal(validatedData.pnl),
+    };
 
-    const response = await fetch(
-      `https://api.cloudinary.com/v1_1/${cloudinary_cloud_name}/upload`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
+    if (typeof data.screenshot === "string") {
+      updatedTrade.screenshotId = trade.screenshotId;
+      updatedTrade.screenshotUrl = trade.screenshotUrl;
+    }
 
-    const cloudinary = await response.json();
+    if (typeof data.screenshot === "object") {
+      /** TODO
+       * 1. Delete cloudinary image using public_id
+       * 2. Upload image to cloudinary
+       * 3. extract new public_id and secure_url from the uploaded cloudinary image
+       * 4. include public_id and secure_url to updateTrade object
+       * 5. Pass updatedTrade object to api
+       */
+    }
 
-    return cloudinary;
+    return {
+      success: true,
+      message: "",
+    };
   } catch (error) {
-    return axiosError(error);
+    axiosError(error);
   }
 };

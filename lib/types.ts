@@ -12,3 +12,7 @@ export type Trade = {
   screenshotUrl: string;
   screenshotId: string;
 };
+
+export type Position = {
+  position?: "long" | "short";
+};

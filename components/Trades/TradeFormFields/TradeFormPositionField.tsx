@@ -6,11 +6,11 @@ import { Control, Controller, ControllerRenderProps } from "react-hook-form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { LONG, SHORT } from "@/lib/constants";
 
-interface CreateTradePositionProps {
+interface TradeFormPositionFieldProps {
   control: Control<TradeSchema>;
 }
 
-const CreateTradePosition = ({ control }: CreateTradePositionProps) => {
+const TradeFormPositionField = ({ control }: TradeFormPositionFieldProps) => {
   const renderRadioGroupPositions = (
     field: ControllerRenderProps<TradeSchema, "position">
   ) => {
@@ -37,7 +37,7 @@ const CreateTradePosition = ({ control }: CreateTradePositionProps) => {
   };
   return (
     <>
-      <Label>Position </Label>
+      <Label>Position</Label>
       <Controller
         name="position"
         control={control}
@@ -47,4 +47,4 @@ const CreateTradePosition = ({ control }: CreateTradePositionProps) => {
   );
 };
 
-export default CreateTradePosition;
+export default TradeFormPositionField;

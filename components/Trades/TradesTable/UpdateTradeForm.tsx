@@ -1,72 +1,50 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { FieldError, FieldErrorsImpl, Merge, useForm } from "react-hook-form";
 import { tradeSchema, TradeSchema } from "@/lib/validations/trade-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Trades } from "@prisma/client";
+import { FieldError, FieldErrorsImpl, Merge, useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
-import { createTrade } from "@/lib/actions/trade-actions";
-import { useParams } from "next/navigation";
-import ToastMessage from "@/components/ToastMessage";
-import { toast } from "sonner";
-import { LONG } from "@/lib/constants";
 import TradeFormDateField from "../TradeFormFields/TradeFormDateField";
 import TradeFormPositionField from "../TradeFormFields/TradeFormPositionField";
 import TradeFormUploadFileField from "../TradeFormFields/TradeFormUploadFileField";
+import { updateTrade } from "@/lib/actions/trade-actions";
 
-interface CreateTradeForm {
-  refetchPortfolioTrades: () => void;
+interface UpdateTradeFormProps {
+  trade: Trades;
   setOpen: (open: boolean) => void;
 }
 
-const CreateTradeForm = ({
-  setOpen,
-  refetchPortfolioTrades,
-}: CreateTradeForm) => {
+const UpdateTradeForm = ({ trade }: UpdateTradeFormProps) => {
   const [isPending, startTransition] = useTransition();
-  const params = useParams();
 
   const {
     register,
+    control,
+    setValue,
     handleSubmit,
     watch,
-    setValue,
-    control,
     formState: { errors },
   } = useForm<TradeSchema>({
     resolver: zodResolver(tradeSchema),
     defaultValues: {
-      position: LONG,
-      entryDate: new Date(),
-      exitDate: new Date(),
+      position: trade.position as "long" | "short",
+      entryDate: new Date(trade.entryDate),
+      exitDate: new Date(trade.exitDate),
+      screenshot: trade.screenshotUrl,
     },
   });
 
-  const entryDate = watch("entryDate");
-  const exitDate = watch("exitDate");
-  const screenshot = watch("screenshot");
+  const entryDate = watch("entryDate", trade.entryDate);
+  const exitDate = watch("exitDate", trade.exitDate);
+  const screenshot = watch("screenshot", trade.screenshotUrl);
 
   const onSubmit = (data: TradeSchema) => {
     startTransition(async () => {
-      const response = await createTrade(data, params.portfolioId as string);
+      const response = await updateTrade(data, trade);
 
-      if (response.success) {
-        refetchPortfolioTrades();
-
-        toast(
-          <ToastMessage success={response.success} message={response.message} />
-        );
-
-        setOpen(false);
-      }
-
-      if (!response.success) {
-        toast(
-          <ToastMessage success={response.success} message={response.message} />
-        );
-      }
+      console.log(response);
     });
   };
 
@@ -90,19 +68,22 @@ const CreateTradeForm = ({
       className="p-5 flex flex-col gap-3 mt-[-40px] relative"
     >
       {/* Symbol */}
-      <div className="trade-form-field">
+      <div className="flex flex-col gap-2">
         <Label>Symbol</Label>
-        <Input {...register("symbol")} placeholder="BTCUSD, AAPL, EURUSD" />
-        {errors.symbol && renderErrorMessage(errors.symbol.message)}
+        <Input
+          placeholder="BTCUSD, AAPL, EURUSD"
+          {...register("symbol")}
+          defaultValue={trade.symbol}
+        />
       </div>
 
       {/* Position */}
-      <div className="trade-form-field">
+      <div className="flex flex-col gap-2">
         <TradeFormPositionField control={control} />
       </div>
 
       {/* Entry Date */}
-      <div className="trade-form-field">
+      <div className="flex flex-col gap-2">
         <Label>Entry Date </Label>
         <TradeFormDateField
           setValue={setValue}
@@ -113,14 +94,18 @@ const CreateTradeForm = ({
       </div>
 
       {/* Entry Price */}
-      <div className="trade-form-field">
+      <div className="flex flex-col gap-2">
         <Label>Entry Price </Label>
-        <Input {...register("entryPrice")} placeholder="100.00" />
+        <Input
+          {...register("entryPrice")}
+          placeholder="100.00"
+          defaultValue={Number(trade.entryPrice)}
+        />
         {errors.entryPrice && renderErrorMessage(errors.entryPrice.message)}
       </div>
 
       {/* Exit Date */}
-      <div className="trade-form-field">
+      <div className="flex flex-col gap-2">
         <Label>Exit Date </Label>
         <TradeFormDateField
           setValue={setValue}
@@ -131,23 +116,35 @@ const CreateTradeForm = ({
       </div>
 
       {/* Exit Price */}
-      <div className="trade-form-field">
+      <div className="flex flex-col gap-2">
         <Label>Exit Price </Label>
-        <Input {...register("exitPrice")} placeholder="100.00" />
+        <Input
+          {...register("exitPrice")}
+          placeholder="100.00"
+          defaultValue={Number(trade.exitPrice)}
+        />
         {errors.exitPrice && renderErrorMessage(errors.exitPrice.message)}
       </div>
 
       {/* Lot Size */}
-      <div className="trade-form-field">
+      <div className="flex flex-col gap-2">
         <Label>Lot Size</Label>
-        <Input {...register("lotSize")} placeholder="0.1" />
+        <Input
+          {...register("lotSize")}
+          placeholder="0.1"
+          defaultValue={Number(trade.lotSize)}
+        />
         {errors.lotSize && renderErrorMessage(errors.lotSize.message)}
       </div>
 
       {/* Profit and Loss in $ */}
-      <div className="trade-form-field">
+      <div className="flex flex-col gap-2">
         <Label>PnL (Profit and Loss in $) </Label>
-        <Input {...register("pnl")} placeholder="100.00" />
+        <Input
+          {...register("pnl")}
+          placeholder="100.00"
+          defaultValue={Number(trade.pnl)}
+        />
         {errors.pnl && renderErrorMessage(errors.pnl.message)}
       </div>
 
@@ -161,11 +158,11 @@ const CreateTradeForm = ({
       {/* Create trade button */}
       <div className="sticky bottom-0 p-3">
         <Button className="w-full rounded-full">
-          {isPending ? "Creating..." : "Create Trade"}
+          {isPending ? "Updating..." : "Update Trade"}
         </Button>
       </div>
     </form>
   );
 };
 
-export default CreateTradeForm;
+export default UpdateTradeForm;

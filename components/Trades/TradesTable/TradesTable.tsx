@@ -1,14 +1,12 @@
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import { Trades } from "@prisma/client";
-import moment from "moment";
-import { currencyFormatter, currencyIsNegative } from "@/lib/utils";
+import TradesTableRow from "./TradesTableRow";
 
 interface TradesTableProps {
   trades: Trades[] | undefined;
@@ -24,6 +22,7 @@ const TradesTable = ({ trades }: TradesTableProps) => {
     "Exit Price",
     "Lot Size",
     "Pnl",
+    " ",
   ];
 
   return (
@@ -41,29 +40,7 @@ const TradesTable = ({ trades }: TradesTableProps) => {
           </TableHeader>
           <TableBody>
             {trades.map((trade: Trades, index) => (
-              <TableRow key={index} className="text-center cursor-pointer">
-                <TableCell className="p-5 font-bold">{trade.symbol}</TableCell>
-                <TableCell>{trade.position}</TableCell>
-                <TableCell>
-                  {`${moment(trade.entryDate).format("MMM DD, YYYY")}`}
-                </TableCell>
-                <TableCell>
-                  {currencyFormatter.format(Number(trade.entryPrice))}
-                </TableCell>
-                <TableCell>
-                  {`${moment(trade.exitDate).format("MMM DD, YYYY")}`}
-                </TableCell>
-                <TableCell>
-                  {currencyFormatter.format(Number(trade.exitPrice))}
-                </TableCell>
-                <TableCell>{Number(trade.lotSize)}</TableCell>
-                <TableCell
-                  className={`${currencyIsNegative(Number(trade.pnl))}`}
-                >
-                  {" "}
-                  {currencyFormatter.format(Number(trade.pnl))}
-                </TableCell>
-              </TableRow>
+              <TradesTableRow trade={trade} key={index} />
             ))}
           </TableBody>
         </Table>
