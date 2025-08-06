@@ -9,7 +9,9 @@ export default function PortfolioLayout({
     <SidebarProvider>
       <SidePanel />
       <main className="portfolio-container">
-        {children} <Toaster position="bottom-center" />
+        <section className="portfolio-section">
+          {children} <Toaster position="bottom-center" />
+        </section>
       </main>
     </SidebarProvider>
   );
