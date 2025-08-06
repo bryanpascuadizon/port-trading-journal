@@ -1,14 +1,17 @@
-"use client";
+import DashboardHeader from "@/components/Dashboard/DashboardHeader";
+import { Separator } from "@/components/ui/separator";
+import { Metadata } from "next";
 
-import { useParams } from "next/navigation";
+export const metadata: Metadata = {
+  title: "Dashboard",
+};
 
 const Dashboard = () => {
-  const params = useParams();
   return (
-    <div>
-      <h1 className="portfolio-title">Dashboard</h1>
-      <p>{params.portfolioId}</p>
-    </div>
+    <>
+      <DashboardHeader />
+      <Separator className="separator my-5" />
+    </>
   );
 };
 
