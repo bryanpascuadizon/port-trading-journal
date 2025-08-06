@@ -10,7 +10,10 @@ const TradesContent = () => {
   return (
     <>
       <TradesNavPanel refetchPortfolioTrades={refetchPortfolioTrades} />
-      <TradesTable trades={trades?.data} />
+      <TradesTable
+        trades={trades?.data}
+        refetchPortfolioTrades={refetchPortfolioTrades}
+      />
     </>
   );
 };

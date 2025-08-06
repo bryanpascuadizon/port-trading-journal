@@ -10,13 +10,20 @@ import TradeFormDateField from "../TradeFormFields/TradeFormDateField";
 import TradeFormPositionField from "../TradeFormFields/TradeFormPositionField";
 import TradeFormUploadFileField from "../TradeFormFields/TradeFormUploadFileField";
 import { updateTrade } from "@/lib/actions/trade-actions";
+import { toast } from "sonner";
+import ToastMessage from "@/components/ToastMessage";
 
 interface UpdateTradeFormProps {
   trade: Trades;
   setOpen: (open: boolean) => void;
+  refetchPortfolioTrades: () => void;
 }
 
-const UpdateTradeForm = ({ trade }: UpdateTradeFormProps) => {
+const UpdateTradeForm = ({
+  trade,
+  setOpen,
+  refetchPortfolioTrades,
+}: UpdateTradeFormProps) => {
   const [isPending, startTransition] = useTransition();
 
   const {
@@ -44,7 +51,15 @@ const UpdateTradeForm = ({ trade }: UpdateTradeFormProps) => {
     startTransition(async () => {
       const response = await updateTrade(data, trade);
 
-      console.log(response);
+      if (response.success) {
+        refetchPortfolioTrades();
+
+        setOpen(false);
+      }
+
+      toast(
+        <ToastMessage success={response.success} message={response.message} />
+      );
     });
   };
 

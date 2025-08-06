@@ -1,6 +1,6 @@
 "use server";
 
-import axios from "axios";
+import { v2 as cloudinary } from "cloudinary";
 
 const CLOUDINARY_CONFIG = {
   CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
@@ -10,9 +10,11 @@ const CLOUDINARY_CONFIG = {
   CLIENT_SECRET: process.env.CLOUDINARY_CLIENT_SECRET,
 };
 
-const auth = Buffer.from(
-  `${CLOUDINARY_CONFIG.CLIENT_ID}:${CLOUDINARY_CONFIG.CLIENT_SECRET}`
-).toString("base64");
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
+  api_key: process.env.CLOUDINARY_CLIENT_ID!,
+  api_secret: process.env.CLOUDINARY_CLIENT_SECRET!,
+});
 
 export const uploadImageToCloudinary = async (file: File | string) => {
   try {
@@ -20,44 +22,39 @@ export const uploadImageToCloudinary = async (file: File | string) => {
       return;
     }
 
-    if (
-      !CLOUDINARY_CONFIG.CLOUD_NAME ||
-      !CLOUDINARY_CONFIG.UPLOAD_PRESET ||
-      !CLOUDINARY_CONFIG.ASSET_FOLDER
-    ) {
+    if (!process.env.CLOUDINARY_UPLOAD_PRESET) {
       return;
     }
 
-    const formData = new FormData();
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    const base64 = buffer.toString("base64");
 
-    formData.append("file", file);
-    formData.append("upload_preset", `${CLOUDINARY_CONFIG.UPLOAD_PRESET}`);
-    formData.append("asset_folder", `${CLOUDINARY_CONFIG.ASSET_FOLDER}`);
+    const mime = file.type;
+    const dataUri = `data:${mime};base64,${base64}`;
 
-    const response = await axios.post(
-      `https://api.cloudinary.com/v1_1/${CLOUDINARY_CONFIG.CLOUD_NAME}/upload`,
-      formData
-    );
+    const response = await cloudinary.uploader.upload(dataUri, {
+      folder: process.env.CLOUDINARY_ASSET_FOLDER!,
+    });
 
-    return response.data;
+    return response;
   } catch (error) {
     console.log(error);
+    return;
   }
 };
 
 export const deleteImageFromCloudinary = async (public_id: string) => {
-  if (!CLOUDINARY_CONFIG.CLOUD_NAME) {
+  try {
+    if (!CLOUDINARY_CONFIG.CLOUD_NAME) {
+      return;
+    }
+
+    const response = await cloudinary.uploader.destroy(public_id);
+
+    return response;
+  } catch (error) {
+    console.log(error);
     return;
   }
-
-  const response = await axios.delete(
-    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CONFIG.CLOUD_NAME}/resources/image/upload/${public_id}`,
-    {
-      headers: {
-        Authorization: `Basic ${auth}`,
-      },
-    }
-  );
-
-  return response;
 };

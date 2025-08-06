@@ -55,18 +55,12 @@ const CreateTradeForm = ({
       if (response.success) {
         refetchPortfolioTrades();
 
-        toast(
-          <ToastMessage success={response.success} message={response.message} />
-        );
-
         setOpen(false);
       }
 
-      if (!response.success) {
-        toast(
-          <ToastMessage success={response.success} message={response.message} />
-        );
-      }
+      toast(
+        <ToastMessage success={response.success} message={response.message} />
+      );
     });
   };
 

@@ -17,9 +17,10 @@ import { useState } from "react";
 
 interface TradesTableRow {
   trade: Trades;
+  refetchPortfolioTrades: () => void;
 }
 
-const TradesTableRow = ({ trade }: TradesTableRow) => {
+const TradesTableRow = ({ trade, refetchPortfolioTrades }: TradesTableRow) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -53,13 +54,17 @@ const TradesTableRow = ({ trade }: TradesTableRow) => {
             <h1 className="font-semibold text-2xl">Update Trade</h1>
           </SheetTitle>
           <SheetDescription>
-            Update trade details to reflect changes, improve accuracy, and keep
+            Update your trades to reflect changes, improve accuracy, and keep
             your strategy aligned.
           </SheetDescription>
         </SheetHeader>
 
         {/* Sheet Body */}
-        <UpdateTradeForm trade={trade} setOpen={setOpen} />
+        <UpdateTradeForm
+          trade={trade}
+          setOpen={setOpen}
+          refetchPortfolioTrades={refetchPortfolioTrades}
+        />
       </SheetContent>
     </Sheet>
   );

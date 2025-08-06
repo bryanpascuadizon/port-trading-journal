@@ -3,6 +3,7 @@
 import {
   createTradeData,
   getTradesByPortfolioData,
+  updateTradeData,
 } from "../handlers/trade-handlers";
 import { axiosError, formatDateToUTCDate } from "../utils";
 import { TradeSchema, tradeSchema } from "../validations/trade-schema";
@@ -11,7 +12,10 @@ import { UNAUTHORIZED_USER_NO_SESSION } from "../constants";
 import { getUserSession } from "./auth-actions";
 import { Prisma, Trades } from "@prisma/client";
 import { AxiosResponse } from "axios";
-import { uploadImageToCloudinary } from "../cloudinary";
+import {
+  deleteImageFromCloudinary,
+  uploadImageToCloudinary,
+} from "../cloudinary";
 
 export const getTradesByPortfolio = async (portfolioId: string) => {
   try {
@@ -41,14 +45,12 @@ export const createTrade = async (data: TradeSchema, portfolioId: string) => {
   try {
     const validatedData = tradeSchema.parse(data);
 
-    const { public_id, secure_url } = await uploadImageToCloudinary(
-      data.screenshot
-    );
+    const cloudinaryResponse = await uploadImageToCloudinary(data.screenshot);
 
-    if (!public_id || !secure_url) {
+    if (!cloudinaryResponse) {
       return {
         success: false,
-        message: "Something went wrong uploading image",
+        message: "Something went wrong uploading screenshot",
       };
     }
 
@@ -72,8 +74,8 @@ export const createTrade = async (data: TradeSchema, portfolioId: string) => {
       pnl: validatedData.pnl,
       userId: user.id!,
       portfolioId: portfolioId,
-      screenshotId: public_id,
-      screenshotUrl: secure_url,
+      screenshotId: cloudinaryResponse.public_id,
+      screenshotUrl: cloudinaryResponse.secure_url,
     };
 
     const response = await createTradeData(tradeData);
@@ -109,20 +111,37 @@ export const updateTrade = async (data: TradeSchema, trade: Trades) => {
     }
 
     if (typeof data.screenshot === "object") {
-      /** TODO
-       * 1. Delete cloudinary image using public_id
-       * 2. Upload image to cloudinary
-       * 3. extract new public_id and secure_url from the uploaded cloudinary image
-       * 4. include public_id and secure_url to updateTrade object
-       * 5. Pass updatedTrade object to api
-       */
+      const deleteResponse = await deleteImageFromCloudinary(
+        trade.screenshotId
+      );
+
+      if (deleteResponse.result !== "ok") {
+        return {
+          success: false,
+          message: "Something went wrong deleting screenshot",
+        };
+      }
+
+      const uploadResponse = await uploadImageToCloudinary(data.screenshot);
+
+      if (!uploadResponse) {
+        return {
+          success: false,
+          message: "Something went wrong uploading screenshot",
+        };
+      }
+
+      updatedTrade.screenshotId = uploadResponse.public_id;
+      updatedTrade.screenshotUrl = uploadResponse.secure_url;
     }
+
+    const response = await updateTradeData(updatedTrade);
 
     return {
       success: true,
-      message: "",
+      message: response.data,
     };
-  } catch (error) {
-    axiosError(error);
+  } catch (error: unknown) {
+    return axiosError(error);
   }
 };

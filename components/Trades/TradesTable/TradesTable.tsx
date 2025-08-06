@@ -10,9 +10,10 @@ import TradesTableRow from "./TradesTableRow";
 
 interface TradesTableProps {
   trades: Trades[] | undefined;
+  refetchPortfolioTrades: () => void;
 }
 
-const TradesTable = ({ trades }: TradesTableProps) => {
+const TradesTable = ({ trades, refetchPortfolioTrades }: TradesTableProps) => {
   const tableHeaders = [
     "Symbol",
     "Position",
@@ -22,7 +23,6 @@ const TradesTable = ({ trades }: TradesTableProps) => {
     "Exit Price",
     "Lot Size",
     "Pnl",
-    " ",
   ];
 
   return (
@@ -40,7 +40,11 @@ const TradesTable = ({ trades }: TradesTableProps) => {
           </TableHeader>
           <TableBody>
             {trades.map((trade: Trades, index) => (
-              <TradesTableRow trade={trade} key={index} />
+              <TradesTableRow
+                trade={trade}
+                key={index}
+                refetchPortfolioTrades={refetchPortfolioTrades}
+              />
             ))}
           </TableBody>
         </Table>
