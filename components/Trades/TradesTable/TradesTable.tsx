@@ -1,12 +1,14 @@
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import { Trades } from "@prisma/client";
 import TradesTableRow from "./TradesTableRow";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface TradesTableProps {
   trades: Trades[] | undefined;
@@ -25,31 +27,51 @@ const TradesTable = ({ trades, refetchPortfolioTrades }: TradesTableProps) => {
     "Pnl",
   ];
 
+  const renderLoadState = () => {
+    return (
+      <TableRow>
+        {tableHeaders.map((header, index) => (
+          <TableCell key={index} className="p-5">
+            <Skeleton className="w-full h-3 rounded-lg bg-gray-200" />
+          </TableCell>
+        ))}
+      </TableRow>
+    );
+  };
+
   return (
-    trades && (
-      <div className="rounded-lg p-0 overflow-hidden border-1 border-gray-100 my-5">
-        <Table>
-          <TableHeader>
-            <TableRow className="bg-gray-100">
-              {tableHeaders.map((header, index) => (
-                <TableHead key={index} className="p-5 text-center font-bold">
-                  {header}
-                </TableHead>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {trades.map((trade: Trades, index) => (
-              <TradesTableRow
-                trade={trade}
-                key={index}
-                refetchPortfolioTrades={refetchPortfolioTrades}
-              />
+    <div className="rounded-lg p-0 overflow-hidden border-1 border-gray-100 my-5">
+      <Table>
+        <TableHeader>
+          <TableRow className="bg-gray-100">
+            {tableHeaders.map((header, index) => (
+              <TableHead key={index} className="p-5 text-center font-bold">
+                {header}
+              </TableHead>
             ))}
-          </TableBody>
-        </Table>
-      </div>
-    )
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {trades ? (
+            <>
+              {trades.map((trade: Trades, index) => (
+                <TradesTableRow
+                  trade={trade}
+                  key={index}
+                  refetchPortfolioTrades={refetchPortfolioTrades}
+                />
+              ))}
+            </>
+          ) : (
+            <>
+              {renderLoadState()}
+              {renderLoadState()}
+              {renderLoadState()}
+            </>
+          )}
+        </TableBody>
+      </Table>
+    </div>
   );
 };
 
