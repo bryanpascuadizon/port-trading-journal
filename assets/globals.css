@@ -153,6 +153,10 @@
     @apply flex flex-col gap-1;
   }
 
+  label {
+    @apply mb-2;
+  }
+
   /*Side Panel*/
   .side-panel,
   .side-panel-header,
@@ -192,4 +196,14 @@
   .portfolio-title {
     @apply text-2xl font-semibold;
   }
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }

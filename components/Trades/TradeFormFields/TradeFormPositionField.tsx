@@ -22,13 +22,13 @@ const TradeFormPositionField = ({ control }: TradeFormPositionFieldProps) => {
       >
         <div className="flex items-center gap-3">
           <RadioGroupItem id={LONG} value={LONG} />
-          <Label htmlFor={LONG} className="text-green-700">
+          <Label htmlFor={LONG} className="text-positive mb-0">
             Long
           </Label>
         </div>
         <div className="flex items-center space-x-2">
           <RadioGroupItem id={SHORT} value={SHORT} />
-          <Label htmlFor={SHORT} className="text-red-700">
+          <Label htmlFor={SHORT} className="text-negative mb-0">
             Short
           </Label>
         </div>
