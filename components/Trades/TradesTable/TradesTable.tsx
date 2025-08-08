@@ -30,9 +30,9 @@ const TradesTable = ({ trades, refetchPortfolioTrades }: TradesTableProps) => {
   const renderLoadState = () => {
     return (
       <TableRow>
-        {tableHeaders.map((header, index) => (
+        {tableHeaders.map((_, index) => (
           <TableCell key={index} className="p-5">
-            <Skeleton className="w-full h-3 rounded-lg bg-gray-200" />
+            <Skeleton className="skeleton w-full h-3" />
           </TableCell>
         ))}
       </TableRow>

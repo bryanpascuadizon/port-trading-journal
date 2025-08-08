@@ -7,6 +7,8 @@ import SidePanelLogoutButton from "./SidePanelLogoutButton";
 import PortfolioList from "./PortfolioList";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { Skeleton } from "../ui/skeleton";
+import { Input } from "../ui/input";
 
 const SidePanelBody = () => {
   const params = useParams();
@@ -39,17 +41,25 @@ const SidePanelBody = () => {
           setPortfolioId={setPortfolioId}
         />
         <p className="side-panel-body-title">PORTFOLIO</p>
-        <div className="side-panel-body-content ">
-          {links.map((link, index) => (
-            <Link
-              key={index}
-              href={link.href}
-              className="flex gap-2 items-center"
-            >
-              {link.icon} {link.label}
-            </Link>
-          ))}
-        </div>
+        {portfolioId ? (
+          <div className="side-panel-body-content ">
+            {links.map((link, index) => (
+              <Link
+                key={index}
+                href={link.href}
+                className="flex gap-2 items-center"
+              >
+                {link.icon} {link.label}
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <>
+            {links.map((_, index) => (
+              <Skeleton className="skeleton my-5" key={index} />
+            ))}
+          </>
+        )}
       </div>
       <div className="side-panel-body-section">
         <p className="side-panel-body-title">USER</p>

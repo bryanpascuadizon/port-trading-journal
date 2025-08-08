@@ -157,6 +157,10 @@
     @apply mb-2;
   }
 
+  .skeleton {
+    @apply h-3 rounded-lg bg-gray-300;
+  }
+
   /*Side Panel*/
   .side-panel,
   .side-panel-header,
