@@ -8,7 +8,6 @@ import PortfolioList from "./PortfolioList";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Skeleton } from "../ui/skeleton";
-import { Input } from "../ui/input";
 
 const SidePanelBody = () => {
   const params = useParams();

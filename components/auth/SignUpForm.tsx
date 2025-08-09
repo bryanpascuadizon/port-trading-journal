@@ -14,6 +14,7 @@ import { redirect } from "next/navigation";
 import { useState, useTransition } from "react";
 import PasswordVisibility from "./PasswordVisibility";
 import ToastMessage from "../ToastMessage";
+import { LoaderCircle } from "lucide-react";
 
 const SignUpForm = () => {
   const [isPending, startTranstion] = useTransition();
@@ -121,7 +122,7 @@ const SignUpForm = () => {
         </div>
 
         <Button className="w-full bg-[var(--color-primary)] text-white">
-          {isPending ? "Signing up..." : "Sign up"}
+          {isPending ? <LoaderCircle className="animate-spin" /> : "Sign up"}
         </Button>
 
         <p className="text-center text-sm text-[var(--color-muted-foreground)]">

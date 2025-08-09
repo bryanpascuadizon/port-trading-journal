@@ -2,6 +2,7 @@ import { Icons } from "@/lib/icons";
 import { Button } from "../ui/button";
 import { signInByOAuth } from "@/lib/actions/auth-actions";
 import { useTransition } from "react";
+import { LoaderCircle } from "lucide-react";
 
 interface OAuthButtonProps {
   label: string;
@@ -33,7 +34,7 @@ const OAuthButton = ({ label, provider }: OAuthButtonProps) => {
       onClick={handleOAuthSignIn}
     >
       {renderOAuthIcon()}
-      {isOAuthLoginPending ? "Signing in..." : label}
+      {isOAuthLoginPending ? <LoaderCircle className="animate-spin" /> : label}
     </Button>
   );
 };
