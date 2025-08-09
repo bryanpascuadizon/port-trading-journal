@@ -146,7 +146,7 @@ const TradeForm = ({
 
       {/* Create trade button */}
       <div className="sticky bottom-0 p-3">
-        <Button className="w-full rounded-full">
+        <Button className="w-full rounded-lg" disabled={isPending}>
           {isPending ? <LoaderCircle className="animate-spin" /> : action}
         </Button>
       </div>
