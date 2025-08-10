@@ -40,7 +40,7 @@ const TradesTable = ({ trades, refetchPortfolioTrades }: TradesTableProps) => {
   };
 
   return (
-    <div className="rounded-lg p-0 overflow-hidden border-1 border-gray-100 my-5">
+    <div className="rounded-lg p-0 overflow-hidden border-1 border-gray-100 my-3">
       <Table>
         <TableHeader>
           <TableRow className="bg-gray-100">

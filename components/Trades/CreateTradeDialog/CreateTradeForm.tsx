@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import ToastMessage from "@/components/ToastMessage";
 import { toast } from "sonner";
 import { LONG } from "@/lib/constants";
-import TradeForm from "../TradeFormFields/TradeForm";
+import TradeForm from "../TradeForm/TradeForm";
 import { TradeSchema } from "@/lib/validations/trade-schema";
 
 interface CreateTradeForm {

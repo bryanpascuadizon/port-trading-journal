@@ -11,7 +11,7 @@ const Trades = () => {
   return (
     <>
       <TradesHeader />
-      <Separator className="separator my-5" />
+      <Separator className="separator my-3" />
       <TradesContent />
     </>
   );

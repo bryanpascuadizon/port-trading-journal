@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
+import Link from "next/link";
 
 interface TradeFormUploadFileFieldProps {
   setValue: UseFormSetValue<TradeSchema>;
@@ -45,27 +46,35 @@ const TradeFormUploadFileField = ({
   return (
     <>
       {screenshot ? (
-        <>
-          <div className="relative">
-            <Image
-              alt=""
-              height={200}
-              width={400}
-              src={
-                typeof screenshot === "object"
-                  ? URL.createObjectURL(screenshot)
-                  : screenshot
-              }
-              className="mt-1 object-contain rounded-lg"
-            />
-            <Button
-              className="absolute rounded-full top-[-10px] right-[-10px] p-1 bg-red-600 hover:bg-red-600"
-              onClick={handleRemoveImage}
+        <div className="">
+          {typeof screenshot === "string" && (
+            <Link
+              href={screenshot}
+              className="text-sm my-2 text-blue-700"
+              target="_blank"
             >
-              <Trash2 />
-            </Button>
-          </div>
-        </>
+              Screenshot link
+            </Link>
+          )}
+
+          <Image
+            alt=""
+            height={200}
+            width={400}
+            src={
+              typeof screenshot === "object"
+                ? URL.createObjectURL(screenshot)
+                : screenshot
+            }
+            className="mt-1 object-contain rounded-lg"
+          />
+          <Button
+            className="w-full rounded-lg my-2 bg-red-600 hover:bg-red-600"
+            onClick={handleRemoveImage}
+          >
+            <Trash2 />
+          </Button>
+        </div>
       ) : (
         <div
           {...getRootProps()}
