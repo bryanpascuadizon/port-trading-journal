@@ -43,31 +43,39 @@ const TradeFormUploadFileField = ({
     setValue("screenshot", "");
   };
 
+  const renderImage = () => {
+    const imageSource =
+      typeof screenshot === "string"
+        ? screenshot
+        : URL.createObjectURL(screenshot);
+
+    return (
+      <Image
+        alt=""
+        height={200}
+        width={400}
+        src={imageSource}
+        className="mt-1 object-contain rounded-lg"
+      />
+    );
+  };
+
   return (
     <>
       {screenshot ? (
         <div className="">
-          {typeof screenshot === "string" && (
+          {typeof screenshot === "string" ? (
             <Link
               href={screenshot}
               className="text-sm my-2 text-blue-700"
               target="_blank"
             >
-              Screenshot link
+              {renderImage()}
             </Link>
+          ) : (
+            renderImage()
           )}
 
-          <Image
-            alt=""
-            height={200}
-            width={400}
-            src={
-              typeof screenshot === "object"
-                ? URL.createObjectURL(screenshot)
-                : screenshot
-            }
-            className="mt-1 object-contain rounded-lg"
-          />
           <Button
             className="w-full rounded-lg my-2 bg-red-600 hover:bg-red-600"
             onClick={handleRemoveImage}
