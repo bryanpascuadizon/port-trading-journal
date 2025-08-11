@@ -141,7 +141,7 @@ const TradeForm = ({
       {/* Remarks */}
       <div className="trade-form-field">
         <Label>Remarks</Label>
-        <Textarea {...register("remarks")}/>
+        <Textarea {...register("remarks")} />
         {errors.remarks && renderErrorMessage(errors.remarks.message)}
       </div>
 
