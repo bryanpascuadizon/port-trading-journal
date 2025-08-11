@@ -29,6 +29,7 @@ const CreateTradeForm = ({
     exitPrice: "",
     lotSize: "",
     pnl: "",
+    remarks: "",
   };
 
   const onSubmit = (data: TradeSchema) => {

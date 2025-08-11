@@ -72,6 +72,7 @@ export const createTrade = async (data: TradeSchema, portfolioId: string) => {
       exitPrice: validatedData.exitPrice,
       lotSize: validatedData.lotSize,
       pnl: validatedData.pnl,
+      remarks: validatedData.remarks,
       userId: user.id!,
       portfolioId: portfolioId,
       screenshotId: cloudinaryResponse.public_id,
@@ -103,6 +104,7 @@ export const updateTrade = async (data: TradeSchema, trade: Trades) => {
       exitPrice: new Prisma.Decimal(validatedData.exitPrice),
       lotSize: new Prisma.Decimal(validatedData.lotSize),
       pnl: new Prisma.Decimal(validatedData.pnl),
+      remarks: validatedData.remarks,
     };
 
     if (typeof data.screenshot === "string") {

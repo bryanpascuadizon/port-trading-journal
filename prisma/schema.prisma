@@ -40,6 +40,7 @@ model Trades {
   exitPrice     Decimal  @default(0) @db.Decimal(12, 2)
   lotSize       Decimal  @default(0) @db.Decimal(12, 2)
   pnl           Decimal  @default(0) @db.Decimal(12, 2)
+  remarks       String   @default("")
   screenshotUrl String
   screenshotId  String
   createdAt     DateTime @default(now()) @db.Timestamp(6)

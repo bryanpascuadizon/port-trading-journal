@@ -8,6 +8,7 @@ import { tradeSchema, TradeSchema } from "@/lib/validations/trade-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import TradeFormUploadFileField from "./TradeFormUploadFileField";
 import { LoaderCircle } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
 
 interface TradeFormProps {
   isPending: boolean;
@@ -135,6 +136,13 @@ const TradeForm = ({
           inputMode="decimal"
         />
         {errors.pnl && renderErrorMessage(errors.pnl.message)}
+      </div>
+
+      {/* Remarks */}
+      <div className="trade-form-field">
+        <Label>Remarks</Label>
+        <Textarea {...register("remarks")}/>
+        {errors.remarks && renderErrorMessage(errors.remarks.message)}
       </div>
 
       {/* Screenshot */}

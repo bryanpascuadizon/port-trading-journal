@@ -7,6 +7,7 @@ export type Trade = {
   exitPrice: string;
   lotSize: string;
   pnl: string;
+  remarks: string;
   portfolioId: string;
   userId: string;
   screenshotUrl: string;

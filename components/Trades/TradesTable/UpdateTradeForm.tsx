@@ -29,6 +29,7 @@ const UpdateTradeForm = ({
     exitPrice: trade.exitPrice.toString(),
     lotSize: trade.lotSize.toString(),
     pnl: trade.pnl.toString(),
+    remarks: trade.remarks,
   };
 
   const onSubmit = (data: TradeSchema) => {
