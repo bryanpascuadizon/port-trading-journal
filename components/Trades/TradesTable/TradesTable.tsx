@@ -27,6 +27,8 @@ const TradesTable = ({ trades, refetchPortfolioTrades }: TradesTableProps) => {
     "Pnl",
   ];
 
+  const numOfRows = 10;
+
   const renderLoadState = () => {
     return (
       <TableRow>
@@ -63,11 +65,7 @@ const TradesTable = ({ trades, refetchPortfolioTrades }: TradesTableProps) => {
               ))}
             </>
           ) : (
-            <>
-              {renderLoadState()}
-              {renderLoadState()}
-              {renderLoadState()}
-            </>
+            renderLoadState()
           )}
         </TableBody>
       </Table>
