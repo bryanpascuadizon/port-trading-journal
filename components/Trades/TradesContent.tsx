@@ -9,7 +9,10 @@ const TradesContent = () => {
 
   return (
     <>
-      <TradesNavPanel refetchPortfolioTrades={refetchPortfolioTrades} />
+      <TradesNavPanel
+        refetchPortfolioTrades={refetchPortfolioTrades}
+        trades={trades?.data}
+      />
       <TradesTable
         trades={trades?.data}
         refetchPortfolioTrades={refetchPortfolioTrades}

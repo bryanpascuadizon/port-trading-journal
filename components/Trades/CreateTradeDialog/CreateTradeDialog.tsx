@@ -11,19 +11,28 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import CreateTradeForm from "./CreateTradeForm";
+import { Trades } from "@prisma/client";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface CreateTradeDialogProps {
+  trades: Trades[] | undefined;
   refetchPortfolioTrades: () => void;
 }
 
 const CreateTradeDialog = ({
+  trades,
   refetchPortfolioTrades,
 }: CreateTradeDialogProps) => {
   const [open, setOpen] = useState(false);
+
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button>Create Trade</Button>
+        {trades ? (
+          <Button>Create Trade</Button>
+        ) : (
+          <Skeleton className="skeleton w-28 h-9" />
+        )}
       </SheetTrigger>
       <SheetContent className="overflow-auto">
         <SheetHeader>

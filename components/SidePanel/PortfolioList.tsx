@@ -17,6 +17,7 @@ import {
 import { Portfolio } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import { redirect, usePathname } from "next/navigation";
+import { Skeleton } from "../ui/skeleton";
 
 type PortfolioListProps = {
   portfolioId: string;
@@ -49,9 +50,11 @@ const PortfolioList = ({ portfolioId, setPortfolioId }: PortfolioListProps) => {
           aria-expanded={open}
           className="justify-between p-7 mt-[-15px] mb-5 w-full"
         >
-          {defaultPortfolio
-            ? renderPortfolio(defaultPortfolio)
-            : "Loading portfolios..."}
+          {defaultPortfolio ? (
+            renderPortfolio(defaultPortfolio)
+          ) : (
+            <Skeleton className="skeleton w-full h-3" />
+          )}
           <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>

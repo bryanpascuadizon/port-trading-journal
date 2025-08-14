@@ -39,9 +39,10 @@ const SidePanelBody = () => {
           portfolioId={portfolioId}
           setPortfolioId={setPortfolioId}
         />
-        <p className="side-panel-body-title">PORTFOLIO</p>
+
         {portfolioId ? (
           <div className="side-panel-body-content ">
+            <p className="side-panel-body-title">PORTFOLIO</p>
             {links.map((link, index) => (
               <Link
                 key={index}
@@ -54,8 +55,9 @@ const SidePanelBody = () => {
           </div>
         ) : (
           <>
+            <Skeleton className="skeleton my-5 h-3 w-[50%]" />
             {links.map((_, index) => (
-              <Skeleton className="skeleton my-5" key={index} />
+              <Skeleton className="skeleton my-5 h-3" key={index} />
             ))}
           </>
         )}
