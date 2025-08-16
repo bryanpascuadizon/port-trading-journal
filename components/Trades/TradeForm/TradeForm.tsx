@@ -52,6 +52,13 @@ const TradeForm = ({
       onSubmit={handleSubmit(onSubmit)}
       className="p-5 flex flex-col gap-3 mt-[-40px] relative"
     >
+      {/* Screenshot */}
+      <div className="trade-form-field">
+        <Label>Upload Screenshot </Label>
+        <TradeFormUploadFileField setValue={setValue} screenshot={screenshot} />
+        {errors.screenshot && renderErrorMessage(errors.screenshot.message)}
+      </div>
+
       {/* Symbol */}
       <div className="trade-form-field">
         <Label>Symbol</Label>
@@ -143,13 +150,6 @@ const TradeForm = ({
         <Label>Remarks</Label>
         <Textarea {...register("remarks")} />
         {errors.remarks && renderErrorMessage(errors.remarks.message)}
-      </div>
-
-      {/* Screenshot */}
-      <div className="trade-form-field">
-        <Label>Upload Screenshot </Label>
-        <TradeFormUploadFileField setValue={setValue} screenshot={screenshot} />
-        {errors.screenshot && renderErrorMessage(errors.screenshot.message)}
       </div>
 
       {/* Create trade button */}
