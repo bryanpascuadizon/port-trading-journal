@@ -14,10 +14,11 @@ import { Trades } from "@prisma/client";
 import moment from "moment";
 import UpdateTradeForm from "./UpdateTradeForm";
 import { useState, useTransition } from "react";
-import { FilePenLine, LoaderCircle, Trash2 } from "lucide-react";
+import { FilePenLine, Trash2 } from "lucide-react";
 import { deleteTrade } from "@/lib/actions/trade-actions";
 import { toast } from "sonner";
 import ToastMessage from "@/components/ToastMessage";
+import LoaderCircleIcon from "@/components/utils/LoaderCircleIcon";
 
 interface TradesTableRow {
   trade: Trades;
@@ -72,7 +73,7 @@ const TradesTableRow = ({ trade, refetchPortfolioTrades }: TradesTableRow) => {
           </SheetTrigger>
 
           {isDeletePending ? (
-            <LoaderCircle className="animate-spin" />
+            <LoaderCircleIcon />
           ) : (
             <Trash2
               className="h-6 text-negative cursor-pointer"

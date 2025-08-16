@@ -9,7 +9,7 @@ import { useActionState, useState } from "react";
 import { APP_NAME, APP_SLOGAN } from "@/lib/constants";
 import PasswordVisibility from "./PasswordVisibility";
 import OAuthButton from "./OAuthButton";
-import { LoaderCircle } from "lucide-react";
+import LoaderCircleIcon from "../utils/LoaderCircleIcon";
 
 const SignInPage = () => {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
@@ -58,11 +58,7 @@ const SignInPage = () => {
         </p>
 
         <Button className="w-full bg-[var(--color-primary)] text-white">
-          {isLoginPending ? (
-            <LoaderCircle className="animate-spin" />
-          ) : (
-            "Sign in"
-          )}
+          {isLoginPending ? <LoaderCircleIcon /> : "Sign in"}
         </Button>
       </form>
       <div className="flex flex-col gap-3">
