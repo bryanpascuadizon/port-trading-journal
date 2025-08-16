@@ -25,6 +25,7 @@ const TradesTable = ({ trades, refetchPortfolioTrades }: TradesTableProps) => {
     "Exit Price",
     "Lot Size",
     "Pnl",
+    "Actions",
   ];
 
   const renderLoadState = () => {

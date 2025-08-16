@@ -155,7 +155,7 @@ const TradeForm = ({
       {/* Create trade button */}
       <div className="sticky bottom-0 p-3">
         <Button
-          className="w-full rounded-lg"
+          className="rounded-lg w-full"
           disabled={isPending}
           type="submit"
         >

@@ -5,6 +5,8 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { MdCandlestickChart } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 import { MdCloudUpload } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import { MdEditDocument } from "react-icons/md";
 
 export const Icons = {
   //[Login]
@@ -20,4 +22,6 @@ export const Icons = {
   //[Generic]
   logout: IoLogOut,
   upload: MdCloudUpload,
+  delete: RiDeleteBin6Fill,
+  update: MdEditDocument,
 };

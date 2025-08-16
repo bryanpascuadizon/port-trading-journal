@@ -149,6 +149,14 @@
     @apply text-green-700;
   }
 
+  .bg-negative {
+    @apply bg-red-700;
+  }
+
+  .bg-positive {
+    @apply text-green-700;
+  }
+
   .trade-form-field {
     @apply flex flex-col gap-2;
   }

@@ -2,6 +2,7 @@
 
 import {
   createTradeData,
+  deleteTradeData,
   getTradesByPortfolioData,
   updateTradeData,
 } from "../handlers/trade-handlers";
@@ -138,6 +139,19 @@ export const updateTrade = async (data: TradeSchema, trade: Trades) => {
     }
 
     const response = await updateTradeData(updatedTrade);
+
+    return {
+      success: true,
+      message: response.data,
+    };
+  } catch (error: unknown) {
+    return axiosError(error);
+  }
+};
+
+export const deleteTrade = async (tradeId: string) => {
+  try {
+    const response = await deleteTradeData(tradeId);
 
     return {
       success: true,

@@ -77,7 +77,7 @@ const TradeFormUploadFileField = ({
           )}
 
           <Button
-            className="w-full rounded-lg my-2 bg-red-600 hover:bg-red-600"
+            className="w-full rounded-lg my-2 bg-negative hover:bg-negative"
             onClick={handleRemoveImage}
           >
             <Trash2 />
