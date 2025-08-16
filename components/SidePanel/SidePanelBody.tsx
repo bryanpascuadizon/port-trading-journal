@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { SidebarContent } from "../ui/sidebar";
-import { Icons } from "@/lib/icons";
 import SidePanelLogoutButton from "./SidePanelLogoutButton";
 import PortfolioList from "./PortfolioList";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Skeleton } from "../ui/skeleton";
+import { ChartCandlestick, LayoutDashboard } from "lucide-react";
 
 const SidePanelBody = () => {
   const params = useParams();
@@ -24,12 +24,12 @@ const SidePanelBody = () => {
     {
       label: "Dashboard",
       href: `/portfolio/dashboard/${portfolioId}`,
-      icon: <Icons.panelDashboard className="w-5 h-5" />,
+      icon: <LayoutDashboard className="h-6" />,
     },
     {
       label: "Trades",
       href: `/portfolio/trades/${portfolioId}`,
-      icon: <Icons.panelTrades className="w-5 h-5" />,
+      icon: <ChartCandlestick className="h-6" />,
     },
   ];
   return (
