@@ -33,8 +33,8 @@ const PortfolioList = ({ portfolioId, setPortfolioId }: PortfolioListProps) => {
   const renderPortfolio = (portfolioItem: Portfolio) => {
     return (
       <div className="flex flex-col items-start">
-        <p className="text-sm">{portfolioItem.name}</p>
-        <p className="text-[10px]">
+        <p className="text-base">{portfolioItem.name}</p>
+        <p className="text-xs">
           {portfolioItem.broker} - {portfolioItem.accountNumber}
         </p>
       </div>
