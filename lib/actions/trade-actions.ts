@@ -149,8 +149,17 @@ export const updateTrade = async (data: TradeSchema, trade: Trades) => {
   }
 };
 
-export const deleteTrade = async (tradeId: string) => {
+export const deleteTrade = async (tradeId: string, screenshotId: string) => {
   try {
+    const deleteResponse = await deleteImageFromCloudinary(screenshotId);
+
+    if (deleteResponse.result !== "ok") {
+      return {
+        success: false,
+        message: "Something went wrong deleting screenshot",
+      };
+    }
+
     const response = await deleteTradeData(tradeId);
 
     return {

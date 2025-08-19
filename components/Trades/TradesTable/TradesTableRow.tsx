@@ -31,7 +31,7 @@ const TradesTableRow = ({ trade, refetchPortfolioTrades }: TradesTableRow) => {
 
   const handleDeleteTrade = () => {
     startDeleteTransition(async () => {
-      const response = await deleteTrade(trade.id);
+      const response = await deleteTrade(trade.id, trade.screenshotId);
 
       if (response.success) {
         refetchPortfolioTrades();
