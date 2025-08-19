@@ -18,9 +18,11 @@ A clean and simple web-based Trading Journal to help traders track and analyze t
 ## 🛠️ Tech Stack
 
 - **Framework**: [Next.js 14](https://nextjs.org/)
+- **State Management**: [Tanstack Query](https://tanstack.com/query/latest)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/)
 - **Auth**: Custom authentication or [NextAuth.js](https://next-auth.js.org/) _(depending on your setup)_
-- **Database**: PostgreSQL via [Prisma](https://www.prisma.io/) _(optional)_
+- **API**: [REST](https://restfulapi.net/)
+- **Database**: PostgreSQL via [Prisma](https://www.prisma.io/)
 - **Image Storage**: [Cloudinary](https://cloudinary.com/)
 
 ---
