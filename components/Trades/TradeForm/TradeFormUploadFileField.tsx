@@ -2,14 +2,15 @@
 
 import { Icons } from "@/lib/icons";
 import { TradeSchema } from "@/lib/validations/trade-schema";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { UseFormSetValue } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
+import { X } from "lucide-react";
 import Link from "next/link";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface TradeFormUploadFileFieldProps {
   setValue: UseFormSetValue<TradeSchema>;
@@ -20,6 +21,7 @@ const TradeFormUploadFileField = ({
   setValue,
   screenshot,
 }: TradeFormUploadFileFieldProps) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
@@ -39,10 +41,6 @@ const TradeFormUploadFileField = ({
     multiple: false,
   });
 
-  const handleRemoveImage = () => {
-    setValue("screenshot", "");
-  };
-
   const renderImage = () => {
     const imageSource =
       typeof screenshot === "string"
@@ -51,11 +49,11 @@ const TradeFormUploadFileField = ({
 
     return (
       <Image
-        alt=""
-        height={200}
-        width={400}
+        alt="trade_image"
+        fill
         src={imageSource}
-        className="mt-1 object-contain rounded-lg"
+        className="object-contain rounded-lg z-10"
+        onLoadingComplete={() => setImageLoaded(true)}
       />
     );
   };
@@ -63,25 +61,32 @@ const TradeFormUploadFileField = ({
   return (
     <>
       {screenshot ? (
-        <div className="">
-          {typeof screenshot === "string" ? (
-            <Link
-              href={screenshot}
-              className="text-sm my-2 text-blue-700"
-              target="_blank"
-            >
-              {renderImage()}
-            </Link>
-          ) : (
-            renderImage()
-          )}
+        <div className="relative">
+          <div className="relative h-41 w-full">
+            {typeof screenshot === "string" ? (
+              <>
+                <Link
+                  href={screenshot}
+                  className="text-sm my-2 text-blue-700"
+                  target="_blank"
+                >
+                  {renderImage()}
+                </Link>
+                <Skeleton className="h-41 w-full skeleton absolute z-0" />
+              </>
+            ) : (
+              renderImage()
+            )}
+          </div>
 
-          <Button
-            className="w-full rounded-lg my-2 bg-negative hover:bg-negative"
-            onClick={handleRemoveImage}
-          >
-            <Trash2 />
-          </Button>
+          {imageLoaded && (
+            <Button
+              className="absolute rounded-full top-[-10px] right-[-10px] z-20 bg-negative hover:bg-negative"
+              onClick={() => setValue("screenshot", "")}
+            >
+              <X />
+            </Button>
+          )}
         </div>
       ) : (
         <div
