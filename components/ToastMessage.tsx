@@ -5,13 +5,7 @@ interface ToastMessageProps {
 
 const ToastMessage = ({ success, message }: ToastMessageProps) => {
   return (
-    <p
-      className={`text-sm ${
-        success
-          ? "text-[var(--color-successfull)]"
-          : "text-[var(--color-destructive)]"
-      }`}
-    >
+    <p className={`text-sm ${success ? "text-positive" : "text-negative"}`}>
       {message}
     </p>
   );

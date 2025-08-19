@@ -24,7 +24,7 @@ const TradesTable = ({ trades, refetchPortfolioTrades }: TradesTableProps) => {
     "Exit Date",
     "Exit Price",
     "Lot Size",
-    "Pnl",
+    "Profit/Loss ($)",
     "Actions",
   ];
 

@@ -19,7 +19,6 @@ import { deleteTrade } from "@/lib/actions/trade-actions";
 import { toast } from "sonner";
 import ToastMessage from "@/components/ToastMessage";
 import LoaderCircleIcon from "@/components/utils/LoaderCircleIcon";
-import { Button } from "@/components/ui/button";
 
 interface TradesTableRow {
   trade: Trades;
@@ -68,7 +67,7 @@ const TradesTableRow = ({ trade, refetchPortfolioTrades }: TradesTableRow) => {
           {" "}
           {currencyFormatter.format(Number(trade.pnl))}
         </TableCell>
-        <TableCell className="flex justify-evenly mt-3">
+        <TableCell className="flex justify-center gap-3 mt-3">
           {isDeletePending ? (
             <LoaderCircleIcon />
           ) : (

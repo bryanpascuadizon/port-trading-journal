@@ -132,9 +132,9 @@ const TradeForm = ({
         {errors.lotSize && renderErrorMessage(errors.lotSize.message)}
       </div>
 
-      {/* Profit and Loss in $ */}
+      {/* Profit/Loss ($) */}
       <div className="trade-form-field">
-        <Label>PnL (Profit and Loss in $) </Label>
+        <Label>Profit/Loss ($) </Label>
         <Input
           {...register("pnl")}
           placeholder="100.00"
