@@ -1,4 +1,4 @@
-# 📈 Trading Journal App
+# 📈 Trading Journal App ![status](https://img.shields.io/badge/status-in_progress-yellow)
 
 A clean and simple web-based Trading Journal to help traders track and analyze their performance. Record trades with details like symbol, entry/exit, position type, lot size, P&L, and upload screenshots for each trade.
 
