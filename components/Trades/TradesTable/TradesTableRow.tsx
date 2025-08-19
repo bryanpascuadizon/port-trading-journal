@@ -19,6 +19,7 @@ import { deleteTrade } from "@/lib/actions/trade-actions";
 import { toast } from "sonner";
 import ToastMessage from "@/components/ToastMessage";
 import LoaderCircleIcon from "@/components/utils/LoaderCircleIcon";
+import { Button } from "@/components/ui/button";
 
 interface TradesTableRow {
   trade: Trades;
@@ -68,17 +69,18 @@ const TradesTableRow = ({ trade, refetchPortfolioTrades }: TradesTableRow) => {
           {currencyFormatter.format(Number(trade.pnl))}
         </TableCell>
         <TableCell className="flex justify-evenly mt-3">
-          <SheetTrigger asChild>
-            <FilePenLine className="h-6 text-positive cursor-pointer" />
-          </SheetTrigger>
-
           {isDeletePending ? (
             <LoaderCircleIcon />
           ) : (
-            <Trash2
-              className="h-6 text-negative cursor-pointer"
-              onClick={handleDeleteTrade}
-            />
+            <>
+              <SheetTrigger asChild>
+                <FilePenLine className="h-6 text-positive cursor-pointer" />
+              </SheetTrigger>{" "}
+              <Trash2
+                className="h-6 text-negative cursor-pointer"
+                onClick={handleDeleteTrade}
+              />
+            </>
           )}
         </TableCell>
       </TableRow>
