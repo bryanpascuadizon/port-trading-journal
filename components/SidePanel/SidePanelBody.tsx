@@ -47,7 +47,7 @@ const SidePanelBody = () => {
               <Link
                 key={index}
                 href={link.href}
-                className="flex gap-2 items-center"
+                className="flex gap-2 items-center font-semibold"
               >
                 {link.icon} {link.label}
               </Link>
