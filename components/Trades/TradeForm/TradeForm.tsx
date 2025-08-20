@@ -50,7 +50,7 @@ const TradeForm = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="p-5 flex flex-col gap-3 mt-[-40px] relative"
+      className="flex flex-col gap-3 relative"
     >
       {/* Screenshot */}
       <div className="trade-form-field">
@@ -153,7 +153,7 @@ const TradeForm = ({
       </div>
 
       {/* Create trade button */}
-      <div className="sticky bottom-0 p-3">
+      <div className="sticky bottom-0 p-3 shadow border-t-1 border-gray-200 bg-white">
         <Button
           className="rounded-lg w-full"
           disabled={isPending}
