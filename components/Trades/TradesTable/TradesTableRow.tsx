@@ -19,6 +19,8 @@ import { deleteTrade } from "@/lib/actions/trade-actions";
 import { toast } from "sonner";
 import ToastMessage from "@/components/ToastMessage";
 import LoaderCircleIcon from "@/components/utils/LoaderCircleIcon";
+import { HoverCard } from "@/components/ui/hover-card";
+import { HoverCardContent, HoverCardTrigger } from "@radix-ui/react-hover-card";
 
 interface TradesTableRow {
   trade: Trades;
@@ -72,13 +74,28 @@ const TradesTableRow = ({ trade, refetchPortfolioTrades }: TradesTableRow) => {
             <LoaderCircleIcon />
           ) : (
             <>
-              <SheetTrigger asChild>
-                <FilePenLine className="h-6 text-positive cursor-pointer" />
-              </SheetTrigger>{" "}
-              <Trash2
-                className="h-6 text-negative cursor-pointer"
-                onClick={handleDeleteTrade}
-              />
+              <HoverCard>
+                <HoverCardTrigger>
+                  <SheetTrigger asChild>
+                    <FilePenLine className="h-6 text-positive cursor-pointer" />
+                  </SheetTrigger>{" "}
+                </HoverCardTrigger>
+                <HoverCardContent className="hover-card-content">
+                  Edit
+                </HoverCardContent>
+              </HoverCard>
+
+              <HoverCard>
+                <HoverCardTrigger>
+                  <Trash2
+                    className="h-6 text-negative cursor-pointer"
+                    onClick={handleDeleteTrade}
+                  />
+                </HoverCardTrigger>
+                <HoverCardContent className="hover-card-content">
+                  Delete
+                </HoverCardContent>
+              </HoverCard>
             </>
           )}
         </TableCell>
