@@ -2,7 +2,7 @@
 
 import { usePortfolio } from "@/lib/hooks/usePortfolio";
 import { Popover } from "../ui/popover";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
 import { Button } from "../ui/button";
 import { CheckIcon, ChevronsUpDownIcon } from "lucide-react";
@@ -25,12 +25,13 @@ type PortfolioListProps = {
 };
 
 const PortfolioList = ({ portfolioId, setPortfolioId }: PortfolioListProps) => {
-  const { portfolios, defaultPortfolio } = usePortfolio();
+  const { portfolios } = usePortfolio();
+
+  const [currentPortfolio, setCurrentPortfolio] = useState<Portfolio>();
+  const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  const [open, setOpen] = useState(false);
-
-  const renderPortfolio = (portfolioItem: Portfolio) => {
+  const renderPortfolioItem = (portfolioItem: Portfolio) => {
     return (
       <div className="flex flex-col items-start">
         <p className="text-base font-semibold">{portfolioItem.name}</p>
@@ -41,6 +42,16 @@ const PortfolioList = ({ portfolioId, setPortfolioId }: PortfolioListProps) => {
     );
   };
 
+  useEffect(() => {
+    const defaultPortfolio = portfolios?.data.find(
+      (portfolioItem: Portfolio) => portfolioItem.isDefault
+    );
+
+    if (defaultPortfolio) {
+      setCurrentPortfolio(defaultPortfolio);
+    }
+  }, [portfolios]);
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -50,8 +61,8 @@ const PortfolioList = ({ portfolioId, setPortfolioId }: PortfolioListProps) => {
           aria-expanded={open}
           className="justify-between p-7 mt-[-15px] mb-5 w-full"
         >
-          {defaultPortfolio ? (
-            renderPortfolio(defaultPortfolio)
+          {currentPortfolio ? (
+            renderPortfolioItem(currentPortfolio)
           ) : (
             <Skeleton className="skeleton w-full h-3" />
           )}
@@ -74,13 +85,14 @@ const PortfolioList = ({ portfolioId, setPortfolioId }: PortfolioListProps) => {
                     const sectionPath = paths[2];
 
                     setPortfolioId(portfolio.id);
+                    setCurrentPortfolio(portfolio);
                     redirect(
                       `/${portfolioPath}/${sectionPath}/${portfolio.id}`
                     );
                   }}
                   className="flex justify-between cursor-pointer"
                 >
-                  {renderPortfolio(portfolio)}
+                  {renderPortfolioItem(portfolio)}
                   <CheckIcon
                     className={cn(
                       portfolioId !== portfolio.id ? "opacity-0" : "opacity-100"
