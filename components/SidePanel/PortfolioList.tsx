@@ -15,7 +15,7 @@ import {
   CommandItem,
 } from "../ui/command";
 import { Portfolio } from "@prisma/client";
-import { cn } from "@/lib/utils";
+import { cn, extractPathname } from "@/lib/utils";
 import { redirect, usePathname } from "next/navigation";
 import { Skeleton } from "../ui/skeleton";
 
@@ -30,6 +30,8 @@ const PortfolioList = ({ portfolioId, setPortfolioId }: PortfolioListProps) => {
   const [currentPortfolio, setCurrentPortfolio] = useState<Portfolio>();
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const { sectionPath, portfolioPath, portfolioIdPath } =
+    extractPathname(pathname);
 
   const renderPortfolioItem = (portfolioItem: Portfolio) => {
     return (
@@ -43,14 +45,17 @@ const PortfolioList = ({ portfolioId, setPortfolioId }: PortfolioListProps) => {
   };
 
   useEffect(() => {
-    const defaultPortfolio = portfolios?.data.find(
-      (portfolioItem: Portfolio) => portfolioItem.isDefault
+    const selectedPortfolio = portfolios?.data.find(
+      (portfolioItem: Portfolio) =>
+        portfolioIdPath
+          ? portfolioItem.id === portfolioIdPath
+          : portfolioItem.isDefault
     );
 
-    if (defaultPortfolio) {
-      setCurrentPortfolio(defaultPortfolio);
+    if (selectedPortfolio) {
+      setCurrentPortfolio(selectedPortfolio);
     }
-  }, [portfolios]);
+  }, [portfolios, portfolioIdPath]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -80,10 +85,6 @@ const PortfolioList = ({ portfolioId, setPortfolioId }: PortfolioListProps) => {
                   key={portfolio.id}
                   value={portfolio.id}
                   onSelect={() => {
-                    const paths = pathname.split("/");
-                    const portfolioPath = paths[1];
-                    const sectionPath = paths[2];
-
                     setPortfolioId(portfolio.id);
                     setCurrentPortfolio(portfolio);
                     redirect(

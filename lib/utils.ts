@@ -70,3 +70,11 @@ export const currencyFormatter = new Intl.NumberFormat("en-US", {
 export const currencyIsNegative = (currency: number) => {
   return currency < 0 ? "text-negative" : "text-positive";
 };
+
+export const extractPathname = (pathname: string) => {
+  const [, portfolioPath = "", sectionPath = "", portfolioIdPath = ""] =
+    pathname.split("/");
+
+  //Ex. /portfolio, /dashboard, /{portfolioId}
+  return { portfolioPath, sectionPath, portfolioIdPath };
+};
