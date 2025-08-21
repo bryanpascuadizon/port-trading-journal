@@ -12,10 +12,15 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 interface TradesTableProps {
   trades: Trades[] | undefined;
+  isLoading: boolean;
   refetchPortfolioTrades: () => void;
 }
 
-const TradesTable = ({ trades, refetchPortfolioTrades }: TradesTableProps) => {
+const TradesTable = ({
+  trades,
+  isLoading,
+  refetchPortfolioTrades,
+}: TradesTableProps) => {
   const tableHeaders = [
     "Symbol",
     "Position",
@@ -41,7 +46,7 @@ const TradesTable = ({ trades, refetchPortfolioTrades }: TradesTableProps) => {
   };
 
   return (
-    <div className="rounded-lg p-0 overflow-hidden border-1 border-gray-100 my-3">
+    <div className="rounded-lg p-0 border-1 border-gray-100 my-3">
       <Table>
         <TableHeader>
           <TableRow className="bg-gray-100">
@@ -53,21 +58,22 @@ const TradesTable = ({ trades, refetchPortfolioTrades }: TradesTableProps) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {trades ? (
-            <>
-              {trades.map((trade: Trades, index) => (
-                <TradesTableRow
-                  trade={trade}
-                  key={index}
-                  refetchPortfolioTrades={refetchPortfolioTrades}
-                />
-              ))}
-            </>
-          ) : (
-            renderLoadState()
-          )}
+          {isLoading && renderLoadState()}
+          {trades &&
+            trades.map((trade: Trades, index) => (
+              <TradesTableRow
+                trade={trade}
+                key={index}
+                refetchPortfolioTrades={refetchPortfolioTrades}
+              />
+            ))}
         </TableBody>
       </Table>
+      {!isLoading && trades?.length === 0 && (
+        <div className="w-full text-center py-5">
+          <p className="font-semibold text-sm">No trade records</p>
+        </div>
+      )}
     </div>
   );
 };

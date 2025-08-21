@@ -5,7 +5,7 @@ import TradesTable from "./TradesTable/TradesTable";
 import { useTrades } from "@/lib/hooks/useTrades";
 
 const TradesContent = () => {
-  const { trades, refetchPortfolioTrades } = useTrades();
+  const { trades, isLoading, refetchPortfolioTrades } = useTrades();
 
   return (
     <>
@@ -15,6 +15,7 @@ const TradesContent = () => {
       />
       <TradesTable
         trades={trades?.data}
+        isLoading={isLoading}
         refetchPortfolioTrades={refetchPortfolioTrades}
       />
     </>
