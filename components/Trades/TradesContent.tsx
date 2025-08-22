@@ -1,20 +1,28 @@
 "use client";
 
+import { Trades } from "@prisma/client";
 import TradesNavPanel from "./TradesNavPanel";
 import TradesTable from "./TradesTable/TradesTable";
-import { useTrades } from "@/lib/hooks/useTrades";
 
-const TradesContent = () => {
-  const { trades, isLoading, refetchPortfolioTrades } = useTrades();
+interface TradesTableProps {
+  trades: Trades[] | undefined;
+  isLoading: boolean;
+  refetchPortfolioTrades: () => void;
+}
 
+const TradesContent = ({
+  trades,
+  isLoading,
+  refetchPortfolioTrades,
+}: TradesTableProps) => {
   return (
     <>
       <TradesNavPanel
         refetchPortfolioTrades={refetchPortfolioTrades}
-        trades={trades?.data}
+        trades={trades}
       />
       <TradesTable
-        trades={trades?.data}
+        trades={trades}
         isLoading={isLoading}
         refetchPortfolioTrades={refetchPortfolioTrades}
       />
