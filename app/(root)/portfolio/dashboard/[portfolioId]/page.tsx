@@ -1,16 +1,18 @@
+"use client";
+
+import DashboardContent from "@/components/Dashboard/DashboardContent";
 import DashboardHeader from "@/components/Dashboard/DashboardHeader";
 import { Separator } from "@/components/ui/separator";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Dashboard",
-};
+import { useTrades } from "@/lib/hooks/useTrades";
 
 const Dashboard = () => {
+  const { trades, isLoading } = useTrades();
+
   return (
     <>
       <DashboardHeader />
-      <Separator className="separator my-5" />
+      <Separator className="separator my-3" />
+      <DashboardContent trades={trades?.data} isLoading={isLoading} />
     </>
   );
 };

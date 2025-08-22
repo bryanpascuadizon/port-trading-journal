@@ -142,23 +142,19 @@
   }
 
   .text-negative {
-    @apply text-red-700;
+    @apply text-red-600;
   }
 
   .text-positive {
-    @apply text-green-700;
+    @apply text-green-600;
   }
 
   .bg-negative {
-    @apply bg-red-700;
+    @apply bg-red-600;
   }
 
   .bg-positive {
-    @apply text-green-700;
-  }
-
-  .trade-form-field {
-    @apply flex flex-col gap-2 px-5;
+    @apply text-green-600;
   }
 
   .hover-card-content {
@@ -211,6 +207,19 @@
 
   .portfolio-title {
     @apply text-2xl font-semibold;
+  }
+
+  /* Dashboard */
+  .dashboard-section {
+    @apply w-full h-22 border-1 border-gray-200 rounded-md p-3;
+  }
+
+  .dashboard-section-title {
+    @apply font-semibold text-sm;
+  }
+  /* Trades */
+  .trade-form-field {
+    @apply flex flex-col gap-2 px-5;
   }
 }
 

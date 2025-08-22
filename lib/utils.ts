@@ -4,6 +4,7 @@ import { twMerge } from "tailwind-merge";
 import axios from "axios";
 import { DEFAULT_ERROR_MESSAGE } from "./constants";
 import { format } from "date-fns";
+import { Trades } from "@prisma/client";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -77,4 +78,9 @@ export const extractPathname = (pathname: string) => {
 
   //Ex. /portfolio, /dashboard, /{portfolioId}
   return { portfolioPath, sectionPath, portfolioIdPath };
+};
+
+export const calculateOverallPnL = (trades: Trades[]) => {
+  const overallTotal = trades.reduce((acc, b) => acc + Number(b.pnl), 0);
+  return overallTotal;
 };
