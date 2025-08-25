@@ -158,12 +158,8 @@
   }
 
   .hover-card-content {
-    @apply rounded-md p-2 border-1 border-gray-200 bg-white font-semibold my-1;
+    @apply rounded-md p-2 border-1 border-gray-200 bg-white font-semibold my-1 max-w-fit z-0;
   }
-
-  /* label {
-    @apply mb-2;
-  } */
 
   .skeleton {
     @apply rounded-lg bg-gray-300;

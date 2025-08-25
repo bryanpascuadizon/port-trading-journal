@@ -6,21 +6,15 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { currencyFormatter, currencyIsNegative } from "@/lib/utils";
 import { Trades } from "@prisma/client";
 import moment from "moment";
-import UpdateTradeForm from "./UpdateTradeForm";
-import { useState, useTransition } from "react";
-import { FilePenLine, Trash2 } from "lucide-react";
-import { deleteTrade } from "@/lib/actions/trade-actions";
-import { toast } from "sonner";
-import ToastMessage from "@/components/ToastMessage";
-import LoaderCircleIcon from "@/components/utils/LoaderCircleIcon";
-import { HoverCard } from "@/components/ui/hover-card";
-import { HoverCardContent, HoverCardTrigger } from "@radix-ui/react-hover-card";
+import UpdateTradeForm from "./Update/UpdateTradeForm";
+import { useState } from "react";
+import DeleteTradeHoverCard from "./Delete/DeleteTradehoverCard";
+import UpdateTradeHoverCard from "./Update/UpdateTradeHoverCard";
 
 interface TradesTableRow {
   trade: Trades;
@@ -28,24 +22,7 @@ interface TradesTableRow {
 }
 
 const TradesTableRow = ({ trade, refetchPortfolioTrades }: TradesTableRow) => {
-  const [isDeletePending, startDeleteTransition] = useTransition();
   const [open, setOpen] = useState(false);
-
-  const handleDeleteTrade = () => {
-    startDeleteTransition(async () => {
-      const response = await deleteTrade(trade.id, trade.screenshotId);
-
-      if (response.success) {
-        refetchPortfolioTrades();
-
-        setOpen(false);
-      }
-
-      toast(
-        <ToastMessage success={response.success} message={response.message} />
-      );
-    });
-  };
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -70,34 +47,13 @@ const TradesTableRow = ({ trade, refetchPortfolioTrades }: TradesTableRow) => {
           {currencyFormatter.format(Number(trade.pnl))}
         </TableCell>
         <TableCell className="flex justify-center gap-3 mt-3">
-          {isDeletePending ? (
-            <LoaderCircleIcon />
-          ) : (
-            <>
-              <HoverCard>
-                <HoverCardTrigger>
-                  <SheetTrigger asChild>
-                    <FilePenLine className="h-6 text-positive cursor-pointer" />
-                  </SheetTrigger>{" "}
-                </HoverCardTrigger>
-                <HoverCardContent className="hover-card-content">
-                  Edit
-                </HoverCardContent>
-              </HoverCard>
-
-              <HoverCard>
-                <HoverCardTrigger>
-                  <Trash2
-                    className="h-6 text-negative cursor-pointer"
-                    onClick={handleDeleteTrade}
-                  />
-                </HoverCardTrigger>
-                <HoverCardContent className="hover-card-content">
-                  Delete
-                </HoverCardContent>
-              </HoverCard>
-            </>
-          )}
+          <>
+            <UpdateTradeHoverCard />
+            <DeleteTradeHoverCard
+              trade={trade}
+              refetchPortfolioTrades={refetchPortfolioTrades}
+            />
+          </>
         </TableCell>
       </TableRow>
       <SheetContent className="overflow-auto">

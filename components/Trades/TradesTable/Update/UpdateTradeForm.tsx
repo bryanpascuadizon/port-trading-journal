@@ -4,7 +4,7 @@ import { useTransition } from "react";
 import { updateTrade } from "@/lib/actions/trade-actions";
 import { toast } from "sonner";
 import ToastMessage from "@/components/ToastMessage";
-import TradeForm from "../TradeForm/TradeForm";
+import TradeForm from "../../TradeForm/TradeForm";
 
 interface UpdateTradeFormProps {
   trade: Trades;
@@ -38,7 +38,6 @@ const UpdateTradeForm = ({
 
       if (response.success) {
         refetchPortfolioTrades();
-
         setOpen(false);
       }
 
