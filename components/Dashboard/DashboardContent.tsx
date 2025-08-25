@@ -1,9 +1,8 @@
 import { Trades } from "@prisma/client";
 import DashboardPnL from "./DashboardPnL";
-import { Skeleton } from "../ui/skeleton";
 
 interface DashboardContent {
-  trades: Trades[] | undefined;
+  trades: Trades[];
   isLoading: boolean;
 }
 
@@ -11,11 +10,7 @@ const DashboardContent = ({ trades }: DashboardContent) => {
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        {trades ? (
-          <DashboardPnL trades={trades} />
-        ) : (
-          <Skeleton className="skeleton w-full h-23" />
-        )}
+        <DashboardPnL trades={trades} />
       </div>
     </>
   );

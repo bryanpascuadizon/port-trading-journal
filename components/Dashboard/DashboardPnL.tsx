@@ -5,6 +5,7 @@ import {
 } from "@/lib/utils";
 import { Trades } from "@prisma/client";
 import { useMemo } from "react";
+import { Skeleton } from "../ui/skeleton";
 
 interface DashboardPnL {
   trades: Trades[];
@@ -15,7 +16,7 @@ const DashboardPnL = ({ trades }: DashboardPnL) => {
     return calculateOverallPnL(trades);
   }, [trades]);
 
-  return (
+  return trades ? (
     <div className="dashboard-section">
       <p className="dashboard-section-title">Realized PNL</p>
       <p
@@ -26,6 +27,8 @@ const DashboardPnL = ({ trades }: DashboardPnL) => {
         {currencyFormatter.format(overAllTotalPnl)}
       </p>
     </div>
+  ) : (
+    <Skeleton className="skeleton w-full h-23" />
   );
 };
 

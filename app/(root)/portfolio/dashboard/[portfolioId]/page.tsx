@@ -8,11 +8,13 @@ import { useTrades } from "@/lib/hooks/useTrades";
 const Dashboard = () => {
   const { trades, isLoading } = useTrades();
 
+  const tradeData = trades?.data ?? [];
+
   return (
     <>
       <DashboardHeader />
       <Separator className="separator my-3" />
-      <DashboardContent trades={trades?.data} isLoading={isLoading} />
+      {trades && <DashboardContent trades={tradeData} isLoading={isLoading} />}
     </>
   );
 };
