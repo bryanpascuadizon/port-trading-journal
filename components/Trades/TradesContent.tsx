@@ -5,7 +5,7 @@ import TradesNavPanel from "./TradesNavPanel";
 import TradesTable from "./TradesTable/TradesTable";
 
 interface TradesTableProps {
-  trades: Trades[] | undefined;
+  trades: Trades[];
   isLoading: boolean;
   refetchPortfolioTrades: () => void;
 }

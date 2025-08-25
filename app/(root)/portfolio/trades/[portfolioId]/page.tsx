@@ -8,12 +8,14 @@ import { useTrades } from "@/lib/hooks/useTrades";
 const Trades = () => {
   const { trades, isLoading, refetchPortfolioTrades } = useTrades();
 
+  const tradeData = trades?.data ?? [];
+
   return (
     <>
       <TradesHeader />
       <Separator className="separator my-3" />
       <TradesContent
-        trades={trades?.data}
+        trades={tradeData}
         isLoading={isLoading}
         refetchPortfolioTrades={refetchPortfolioTrades}
       />
