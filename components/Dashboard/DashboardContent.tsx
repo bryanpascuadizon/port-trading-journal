@@ -1,5 +1,6 @@
 import { Trades } from "@prisma/client";
 import DashboardPnL from "./DashboardPnL";
+import DashboardWinRate from "./DashboardWinRate";
 
 interface DashboardContent {
   trades: Trades[];
@@ -11,6 +12,7 @@ const DashboardContent = ({ trades }: DashboardContent) => {
     <>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <DashboardPnL trades={trades} />
+        <DashboardWinRate trades={trades} />
       </div>
     </>
   );

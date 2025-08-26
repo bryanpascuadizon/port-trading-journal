@@ -69,7 +69,13 @@ export const currencyFormatter = new Intl.NumberFormat("en-US", {
 });
 
 export const currencyIsNegative = (currency: number) => {
-  return currency < 0 ? "text-negative" : "text-positive";
+  if (currency < 0) {
+    return "text-negative";
+  }
+
+  if (currency > 0) {
+    return "text-positive";
+  }
 };
 
 export const extractPathname = (pathname: string) => {
@@ -83,4 +89,22 @@ export const extractPathname = (pathname: string) => {
 export const calculateOverallPnL = (trades: Trades[]) => {
   const overallTotal = trades.reduce((acc, b) => acc + Number(b.pnl), 0);
   return overallTotal;
+};
+
+export const calculateOverallWinRate = (trades: Trades[]) => {
+  const numberOfTrades = trades.length;
+  const winningTradesLength = trades.filter(
+    (trade: Trades) => Number(trade.pnl) > 0
+  ).length;
+  const losingTradesLength = trades.filter(
+    (trade: Trades) => Number(trade.pnl) < 0
+  ).length;
+  const winRatePercentage = (winningTradesLength / numberOfTrades) * 100;
+
+  return {
+    numberOfTrades,
+    winningTradesLength,
+    losingTradesLength,
+    winRatePercentage,
+  };
 };
