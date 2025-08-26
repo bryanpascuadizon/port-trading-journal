@@ -5,7 +5,7 @@ import {
   deleteTradeData,
   getTradesByPortfolioData,
   updateTradeData,
-} from "../handlers/trade-handlers";
+} from "../service/trade-service";
 import { axiosError, formatDateToUTCDate } from "../utils";
 import { TradeSchema, tradeSchema } from "../validations/trade-schema";
 import { Trade } from "../types";

@@ -3,7 +3,7 @@
 import { auth, signIn, signOut } from "@/auth";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { signUpSchema, SignUpSchema } from "../validations/auth-schema";
-import { signUpUserData } from "../handlers/auth-handlers";
+import { signUpUserData } from "../service/auth-service";
 import { axiosError } from "../utils";
 
 export const signInByOAuth = async (provider: string) => {

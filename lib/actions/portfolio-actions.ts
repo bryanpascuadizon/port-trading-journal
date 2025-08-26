@@ -2,7 +2,7 @@ import { DEFAULT_ERROR_MESSAGE } from "../constants";
 import {
   createPortfolioData,
   getUserPortfoliosData,
-} from "../handlers/portfolio-handlers";
+} from "../service/portfolio-service";
 import { axiosError } from "../utils";
 import {
   PortfolioSchema,
