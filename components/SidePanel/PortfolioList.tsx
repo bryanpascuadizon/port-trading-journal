@@ -64,7 +64,7 @@ const PortfolioList = ({ portfolioId, setPortfolioId }: PortfolioListProps) => {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="justify-between p-7 mt-[-15px] mb-5 w-full"
+          className="justify-between p-7 mt-[-15px] mb-5 w-full shadow-none"
         >
           {currentPortfolio ? (
             renderPortfolioItem(currentPortfolio)
