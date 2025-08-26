@@ -46,10 +46,10 @@ const TradesTable = ({
   };
 
   return (
-    <div className="rounded-lg p-0 border-1 border-gray-100 my-3">
+    <div className="rounded-lg p-0 bg-white my-3">
       <Table>
         <TableHeader>
-          <TableRow className="bg-gray-100">
+          <TableRow>
             {tableHeaders.map((header, index) => (
               <TableHead key={index} className="p-5 text-center font-bold">
                 {header}

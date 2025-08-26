@@ -198,7 +198,7 @@
   }
 
   .portfolio-section {
-    @apply p-4.5 h-full bg-white rounded-lg;
+    @apply p-4.5 h-full rounded-lg;
   }
 
   .portfolio-title {
@@ -207,7 +207,7 @@
 
   /* Dashboard */
   .dashboard-section {
-    @apply w-full h-22 border-1 border-gray-200 rounded-md p-3;
+    @apply w-full h-22 border-1 border-gray-200 rounded-md p-3 bg-white;
   }
 
   .dashboard-section-title {
