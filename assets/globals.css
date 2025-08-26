@@ -207,11 +207,11 @@
 
   /* Dashboard */
   .dashboard-section {
-    @apply w-full h-22 border-1 border-gray-200 rounded-md p-3 bg-white;
+    @apply w-full h-fit border-1 border-gray-200 rounded-md p-4 bg-white;
   }
 
   .dashboard-section-title {
-    @apply font-semibold text-sm;
+    @apply font-semibold;
   }
   /* Trades */
   .trade-form-field {
