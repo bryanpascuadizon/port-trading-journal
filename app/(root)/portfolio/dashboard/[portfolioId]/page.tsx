@@ -14,7 +14,7 @@ const Dashboard = () => {
     <>
       <DashboardHeader />
       <Separator className="separator my-3" />
-      {trades && <DashboardContent trades={tradeData} isLoading={isLoading} />}
+      <DashboardContent trades={tradeData} isLoading={isLoading} />
     </>
   );
 };

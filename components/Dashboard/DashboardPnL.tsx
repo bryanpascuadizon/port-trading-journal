@@ -12,23 +12,39 @@ interface DashboardPnL {
 }
 
 const DashboardPnL = ({ trades }: DashboardPnL) => {
-  const overAllTotalPnl: number = useMemo(() => {
+  const overallPnl = useMemo(() => {
     return calculateOverallPnL(trades);
   }, [trades]);
 
   return trades ? (
     <div className="dashboard-section">
       <p className="dashboard-section-title">Realized PNL</p>
-      <p
-        className={`my-2 font-semibold text-2xl ${currencyIsNegative(
-          overAllTotalPnl
-        )}`}
-      >
-        {currencyFormatter.format(overAllTotalPnl)}
-      </p>
+
+      <div className="flex justify-between items-center gap-5">
+        <div>
+          <p
+            className={`my-2 font-semibold text-2xl ${currencyIsNegative(
+              overallPnl.overallTotal
+            )}`}
+          >
+            {currencyFormatter.format(overallPnl.overallTotal)}
+          </p>
+        </div>
+        <div className="text-xs">
+          <span className="text-positive">Wins: </span>
+          <span>
+            {currencyFormatter.format(overallPnl.overallWinningTrades)}
+          </span>
+          <br />
+          <span className="text-negative">Loses: </span>
+          <span>
+            {currencyFormatter.format(overallPnl.overallLosingTrades)}
+          </span>
+        </div>
+      </div>
     </div>
   ) : (
-    <Skeleton className="skeleton w-full h-23" />
+    <Skeleton className="skeleton w-full h-26" />
   );
 };
 

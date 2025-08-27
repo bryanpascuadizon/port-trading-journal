@@ -87,8 +87,29 @@ export const extractPathname = (pathname: string) => {
 };
 
 export const calculateOverallPnL = (trades: Trades[]) => {
-  const overallTotal = trades.reduce((acc, b) => acc + Number(b.pnl), 0);
-  return overallTotal;
+  const overallTotal = trades.reduce(
+    (acc, trade) => acc + Number(trade.pnl),
+    0
+  );
+
+  const { overallWinningTrades, overallLosingTrades } = trades.reduce(
+    (acc, trade: Trades) => {
+      const pnl = Number(trade.pnl);
+
+      if (pnl > 0) {
+        acc.overallWinningTrades++;
+      }
+
+      if (pnl < 0) {
+        acc.overallLosingTrades++;
+      }
+
+      return acc;
+    },
+    { overallWinningTrades: 0, overallLosingTrades: 0 }
+  );
+
+  return { overallWinningTrades, overallLosingTrades, overallTotal };
 };
 
 export const calculateOverallWinRate = (trades: Trades[]) => {
