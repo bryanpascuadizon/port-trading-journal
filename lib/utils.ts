@@ -97,11 +97,11 @@ export const calculateOverallPnL = (trades: Trades[]) => {
       const pnl = Number(trade.pnl);
 
       if (pnl > 0) {
-        acc.overallWinningTrades++;
+        acc.overallWinningTrades = acc.overallWinningTrades + pnl;
       }
 
       if (pnl < 0) {
-        acc.overallLosingTrades++;
+        acc.overallLosingTrades = acc.overallLosingTrades + pnl;
       }
 
       return acc;
