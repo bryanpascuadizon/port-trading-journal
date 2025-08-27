@@ -26,10 +26,10 @@ const DashboardWinRate = ({ trades }: DashboardWinRateProps) => {
         </div>
         <div className="text-xs">
           <span className="text-positive">Wins: </span>
-          <span>{winRate.winningTradesLength}</span>
+          <span>{winRate.winningTrades}</span>
           <br />
           <span className="text-negative">Loses: </span>
-          <span>{winRate.losingTradesLength}</span>
+          <span>{winRate.losingTrades}</span>
         </div>
       </div>
     </div>

@@ -114,18 +114,28 @@ export const calculateOverallPnL = (trades: Trades[]) => {
 
 export const calculateOverallWinRate = (trades: Trades[]) => {
   const numberOfTrades = trades.length;
-  const winningTradesLength = trades.filter(
-    (trade: Trades) => Number(trade.pnl) > 0
-  ).length;
-  const losingTradesLength = trades.filter(
-    (trade: Trades) => Number(trade.pnl) < 0
-  ).length;
-  const winRatePercentage = (winningTradesLength / numberOfTrades) * 100;
+
+  const { winningTrades, losingTrades } = trades.reduce(
+    (acc, trade) => {
+      const pnl = Number(trade.pnl);
+
+      if (pnl > 0) {
+        acc.winningTrades++;
+      }
+
+      if (pnl < 0) {
+        acc.losingTrades++;
+      }
+      return acc;
+    },
+    { winningTrades: 0, losingTrades: 0 }
+  );
+  const winRatePercentage = (winningTrades / numberOfTrades) * 100;
 
   return {
     numberOfTrades,
-    winningTradesLength,
-    losingTradesLength,
+    winningTrades,
+    losingTrades,
     winRatePercentage,
   };
 };
