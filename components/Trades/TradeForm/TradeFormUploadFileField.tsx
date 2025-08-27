@@ -52,8 +52,10 @@ const TradeFormUploadFileField = ({
         alt="trade_image"
         fill
         src={imageSource}
-        className="object-contain rounded-lg z-10"
-        onLoadingComplete={() => setImageLoaded(true)}
+        className="object-contain rounded-lg"
+        onLoad={() => {
+          setImageLoaded(true);
+        }}
       />
     );
   };
@@ -72,7 +74,7 @@ const TradeFormUploadFileField = ({
                 >
                   {renderImage()}
                 </Link>
-                <Skeleton className="h-41 w-full skeleton absolute z-0" />
+                {!imageLoaded && <Skeleton className="h-41 w-full skeleton" />}
               </>
             ) : (
               renderImage()
