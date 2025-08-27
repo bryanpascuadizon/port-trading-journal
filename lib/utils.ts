@@ -130,7 +130,7 @@ export const calculateOverallWinRate = (trades: Trades[]) => {
     },
     { winningTrades: 0, losingTrades: 0 }
   );
-  const winRatePercentage = (winningTrades / numberOfTrades) * 100;
+  const winRatePercentage = ((winningTrades / numberOfTrades) * 100).toFixed(2);
 
   return {
     numberOfTrades,
