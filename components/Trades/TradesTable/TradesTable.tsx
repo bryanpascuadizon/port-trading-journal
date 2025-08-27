@@ -49,7 +49,7 @@ const TradesTable = ({
     <div className="rounded-lg p-0 bg-white my-3">
       <Table>
         <TableHeader>
-          <TableRow>
+          <TableRow className="overflow-hidden">
             {tableHeaders.map((header, index) => (
               <TableHead key={index} className="p-5 text-center font-bold">
                 {header}
@@ -57,7 +57,7 @@ const TradesTable = ({
             ))}
           </TableRow>
         </TableHeader>
-        <TableBody>
+        <TableBody >
           {isLoading && renderLoadState()}
           {trades &&
             trades.map((trade: Trades, index) => (

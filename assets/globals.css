@@ -173,7 +173,7 @@
   }
 
   .side-panel-header {
-    @apply font-semibold text-2xl pb-5;
+    @apply font-semibold text-xl pb-5;
   }
 
   .side-panel-body {
@@ -198,7 +198,7 @@
   }
 
   .portfolio-section {
-    @apply p-4.5 h-full rounded-lg;
+    @apply p-3.5 h-full rounded-lg;
   }
 
   .portfolio-title {

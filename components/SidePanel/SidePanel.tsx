@@ -5,7 +5,7 @@ import SidePanelHeader from "./SidePanelHeader";
 
 const SidePanel = () => {
   return (
-    <Sidebar className="py-5 pl-5 side-panel border-r-gray-100">
+    <Sidebar className="p-5 side-panel border-r-gray-300">
       <SidePanelHeader />
       <Separator className="separator" />
       <SidePanelBody />
