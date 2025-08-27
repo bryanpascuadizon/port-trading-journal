@@ -9,18 +9,19 @@ import { Skeleton } from "../ui/skeleton";
 
 interface DashboardPnL {
   trades: Trades[];
+  isLoading: boolean;
 }
 
-const DashboardPnL = ({ trades }: DashboardPnL) => {
+const DashboardPnL = ({ trades, isLoading }: DashboardPnL) => {
   const overallPnl = useMemo(() => {
     return calculateOverallPnL(trades);
   }, [trades]);
 
-  return trades ? (
+  return !isLoading ? (
     <div className="dashboard-section">
       <p className="dashboard-section-title">Realized PNL</p>
 
-      <div className="flex justify-between items-center gap-5">
+      <div className="grid grid-cols-1 xl:grid-cols-2 items-center gap-1">
         <div>
           <p
             className={`my-2 font-semibold text-2xl ${currencyIsNegative(

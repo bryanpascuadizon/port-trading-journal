@@ -1,20 +1,22 @@
 import { calculateOverallWinRate, currencyIsNegative } from "@/lib/utils";
 import { Trades } from "@prisma/client";
 import { useMemo } from "react";
+import { Skeleton } from "../ui/skeleton";
 
 interface DashboardWinRateProps {
   trades: Trades[];
+  isLoading: boolean;
 }
 
-const DashboardWinRate = ({ trades }: DashboardWinRateProps) => {
+const DashboardWinRate = ({ trades, isLoading }: DashboardWinRateProps) => {
   const winRate = useMemo(() => {
     return calculateOverallWinRate(trades);
   }, [trades]);
 
-  return (
+  return !isLoading ? (
     <div className="dashboard-section">
       <p className="dashboard-section-title">Win Rate</p>
-      <div className="flex justify-between items-center gap-5">
+      <div className="grid grid-cols-1 xl:grid-cols-2 items-center gap-1">
         <div>
           <p
             className={`my-2 font-semibold text-2xl ${currencyIsNegative(
@@ -33,6 +35,8 @@ const DashboardWinRate = ({ trades }: DashboardWinRateProps) => {
         </div>
       </div>
     </div>
+  ) : (
+    <Skeleton className="skeleton w-full h-26" />
   );
 };
 
