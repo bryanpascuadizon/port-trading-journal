@@ -139,3 +139,27 @@ export const calculateOverallWinRate = (trades: Trades[]) => {
     winRatePercentage,
   };
 };
+
+export const calculateProfitFactor = (trades: Trades[]) => {
+  const { overallWinningTrades, overallLosingTrades } = trades.reduce(
+    (acc, trade: Trades) => {
+      const pnl = Number(trade.pnl);
+
+      if (pnl > 0) {
+        acc.overallWinningTrades = acc.overallWinningTrades + pnl;
+      }
+
+      if (pnl < 0) {
+        acc.overallLosingTrades = acc.overallLosingTrades + pnl;
+      }
+
+      return acc;
+    },
+    { overallWinningTrades: 0, overallLosingTrades: 0 }
+  );
+
+  const profitFactor =
+    trades.length > 0 ? overallWinningTrades / overallLosingTrades : 0;
+
+  return profitFactor;
+};
