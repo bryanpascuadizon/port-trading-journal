@@ -2,6 +2,7 @@ import { calculateOverallWinRate, currencyIsNegative } from "@/lib/utils";
 import { Trades } from "@prisma/client";
 import { useMemo } from "react";
 import { Skeleton } from "../ui/skeleton";
+import DashboardInfo from "./DashboardInfo";
 
 interface DashboardWinRateProps {
   trades: Trades[];
@@ -15,7 +16,13 @@ const DashboardWinRate = ({ trades, isLoading }: DashboardWinRateProps) => {
 
   return !isLoading ? (
     <div className="dashboard-section">
-      <p className="dashboard-section-title">Win Rate</p>
+      <div className="dashboard-section-title">
+        <span>Win Rate</span>{" "}
+        <DashboardInfo
+          title="Win Rate"
+          info="is the percentage of your trades that made a profit."
+        />
+      </div>
       <div className="grid grid-cols-1 xl:grid-cols-2 items-center gap-1">
         <div>
           <p

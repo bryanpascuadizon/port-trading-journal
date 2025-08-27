@@ -6,6 +6,7 @@ import {
 import { Trades } from "@prisma/client";
 import { useMemo } from "react";
 import { Skeleton } from "../ui/skeleton";
+import DashboardInfo from "./DashboardInfo";
 
 interface DashboardPnL {
   trades: Trades[];
@@ -19,7 +20,13 @@ const DashboardPnL = ({ trades, isLoading }: DashboardPnL) => {
 
   return !isLoading ? (
     <div className="dashboard-section">
-      <p className="dashboard-section-title">Realized PNL</p>
+      <div className="dashboard-section-title">
+        <span>Realized PNL</span>{" "}
+        <DashboardInfo
+          title="Realized Pnl"
+          info="is the money you actually made or lost after closing a trade. It’s your real profit or loss, not just numbers moving while the trade is still open."
+        />
+      </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 items-center gap-1">
         <div>
