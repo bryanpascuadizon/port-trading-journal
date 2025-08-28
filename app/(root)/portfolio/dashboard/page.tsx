@@ -7,7 +7,7 @@ const DashboardPage = () => {
   const { defaultPortfolio, isLoading } = usePortfolio();
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return;
   }
 
   if (defaultPortfolio) {
